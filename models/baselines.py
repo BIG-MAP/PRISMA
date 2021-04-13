@@ -9,11 +9,12 @@ from models.spectrum import SpectrumProcessed
 class Baselines:
 
     batt_info_id = '99YH6S'
+    process = 'Baseline correction'
 
     @staticmethod
     def asymmetric_least_squares(spectrum, log_p=-1.5, log_lambda=7):
 
-        new_metadata = {'Process':'Baseline correction',
+        new_metadata = {'Process': Baselines.process,
                         'Process ID': Baselines.batt_info_id,
                         'Method':'Assymetric Least Squares',
                         'Log10(p)':log_p, 'Log10(lambda)':log_lambda}
@@ -38,8 +39,7 @@ class Baselines:
                 break
             else:
                 w = updated_w 
-
-                
+     
         new_counts = spectrum.counts - z
         new_energies = spectrum.energies
 

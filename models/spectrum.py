@@ -31,6 +31,13 @@ class SpectrumRaw(Spectrum):
 class SpectrumProcessed(Spectrum):
     object_identifiers = {'Class':'SpectrumProcessed',
                         'BattInfo ID': '997X0X0'}
+
+    @property
+    def baseline(self):
+        if self.metadata['Process'] == 'Baseline correction':
+            return self.parent.counts - self.counts
+        else:
+            return None
     
 
 
