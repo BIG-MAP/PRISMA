@@ -67,7 +67,7 @@ class Parsers:
         read_lines = bitstream.split(sep=b'\r\n')
 
         #read the first line: names attached to each spectrum. Ignores first element of line (empty string)
-        spectra_names = np.array(read_lines[0].split(sep=b',')[1:], dtype=float) 
+        spectra_names = np.array(read_lines[0].split(sep=b',')[1:], dtype=str) 
 
         #Read remaining lines. Each line is a row that starts with the wavenumber, and continues with the intensity of each spectrum at that wavenumber.
         #Each line is split into elements (via ;), transformed into a numpy array and stored as an element of the list
