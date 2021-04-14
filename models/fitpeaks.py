@@ -13,15 +13,15 @@ class Lineshapes:
         The returned function is: returned_function(x, y0, h1, p1, w1, h2, p2, w2 ,h3 ,p3 ,w3...)
         """
 
-        area_labels = ['h{}'.format(n) for n in range(1,npeaks+1)]
+        height_labels = ['h{}'.format(n) for n in range(1,npeaks+1)]
         width_labels = ['w{}'.format(n) for n in range(1,npeaks+1)]
         position_labels = ['p{}'.format(n) for n in range(1,npeaks+1)]
 
         equation = 'y0'
         expression = 'lambda x,y0'
 
-        for h, w, p in zip(area_labels,width_labels,position_labels):
-            equation += '+(1.57079633*{0}*({2}**2))/(6.28318531*((x-{1})**2+(0.5*{2})**2))'.format(h,p,w) 
+        for h, p, w in zip(height_labels,position_labels,width_labels):
+            equation += '+ {0}*({2}**2)/((x-{1})**2 + {2}**2)'.format(h,p,w) 
             expression += ',{0},{1},{2}'.format(h,p,w)
 
         return eval(expression + ': ' + equation)
@@ -34,15 +34,15 @@ class Lineshapes:
         The returned function is: returned_function(x, y0, h1, p1, w1, h2, p2, w2 ,h3 ,p3 ,w3...)
         """
 
-        area_labels = ['h{}'.format(n) for n in range(1,npeaks+1)]
+        height_labels = ['h{}'.format(n) for n in range(1,npeaks+1)]
         width_labels = ['w{}'.format(n) for n in range(1,npeaks+1)]
         position_labels = ['p{}'.format(n) for n in range(1,npeaks+1)]
 
         equation = 'y0'
         expression = 'lambda x,y0'
 
-        for h, p, w in zip(area_labels,position_labels,width_labels):
-            equation += '+ {0}*(2.71828183**(-2.77258872*((x-{1})/{2})**2))'.format(h,p,w) 
+        for h, p, w in zip(height_labels,position_labels,width_labels):
+            equation += '+ {0}*(2.71828183**(-0.69314718*((x-{1})/{2})**2))'.format(h,p,w) 
             expression += ',{0},{1},{2}'.format(h,p,w)
 
         return eval(expression + ': ' + equation)
@@ -55,7 +55,7 @@ class Lineshapes:
         The returned function is: returned_function(x, y0, h1, p1, w1, h2, p2, w2 ,h3 ,p3 ,w3...)
         """
 
-        area_labels = ['h{}'.format(n) for n in range(1,npeaks+1)]
+        height_labels = ['h{}'.format(n) for n in range(1,npeaks+1)]
         width_labels = ['w{}'.format(n) for n in range(1,npeaks+1)]
         position_labels = ['p{}'.format(n) for n in range(1,npeaks+1)]
 
@@ -65,8 +65,8 @@ class Lineshapes:
         equation = 'y0'
         expression = 'lambda x,y0'
 
-        for h, p, w in zip(area_labels,position_labels,width_labels):
-            equation += '+ {3}*(1.57079633*{0}*({2}**2))/(6.28318531*((x-{1})**2+(0.5*{2})**2)) + {4}*{0}*(2.71828183**(-2.77258872*((x-{1})/{2})**2))'.format(h, p, w, lor_mix, gauss_mix)
+        for h, p, w in zip(height_labels,position_labels,width_labels):
+            equation += '+ {3}*{0}*(2.71828183**(-0.69314718*((x-{1})/{2})**2)) + {4}*({0}*({2}**2))/((x-{1})**2+{2}**2)'.format(h, p, w, lor_mix, gauss_mix)
             expression += ',{0},{1},{2}'.format(h,p,w)
 
         return eval(expression + ': ' + equation)
