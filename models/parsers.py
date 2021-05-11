@@ -52,6 +52,7 @@ class Parsers:
 
         spectra_metadata['energy_limits']=[np.amin(energies),np.amax(energies)]
         spectra_metadata['number_of_spectra'] = len(spectra)   
+        spectra_metadata['number_of_datapoints'] = len(energies)
 
         return spectra, spectra_metadata
 
@@ -82,7 +83,8 @@ class Parsers:
 
 
         spectra_metadata['energy_limits']=[np.amin(energies),np.amax(energies)]
-        spectra_metadata['number_of_spectra'] = len(spectra)   
+        spectra_metadata['number_of_spectra'] = len(spectra) 
+        spectra_metadata['number_of_datapoints'] = len(energies)  
 
         return spectra, spectra_metadata
 
@@ -93,7 +95,7 @@ class Parsers:
     def multiple_txt(upload: dict):
 
         #initialize variables
-        energies_min, energies_max = float('inf'), -float('inf') 
+        energies_min, energies_max, n_datapoints = float('inf'), -float('inf'), 0 
         spectra, spectra_metadata = {}, {}
 
         for label, bitstream in upload.items():
@@ -102,17 +104,20 @@ class Parsers:
             array = np.array(bitstream.split(sep=None))
             energies, counts = array.reshape((int(len(array)/2),2)).astype('float64').T 
 
-            #update overall minimum and maximum values of energy
+            #update overall minimum and maximum values of energy, and the maximum number of datapoints
             current_minimum_energy_value = np.amin(energies)
             current_maximum_energy_value = np.amax(energies)
+            current_n_datapoints = len(energies)
             energies_min = current_minimum_energy_value if current_minimum_energy_value < energies_min else energies_min
             energies_max = current_maximum_energy_value if current_maximum_energy_value > energies_max else energies_max
+            n_datapoints = current_n_datapoints if current_n_datapoints > n_datapoints else n_datapoints
 
             #add spectrum object to dictionary
             spectra[label] = {'root': Spectrum(energies = energies, counts = counts, name=label)} #parent: None
 
         spectra_metadata['energy_limits']=[energies_min,energies_max]
-        spectra_metadata['number_of_spectra'] = len(spectra)   
+        spectra_metadata['number_of_spectra'] = len(spectra)
+        spectra_metadata['number_of_datapoints'] = n_datapoints   
 
         return spectra, spectra_metadata
 

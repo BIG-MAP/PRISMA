@@ -101,10 +101,10 @@ class FitPeaks:
             init_guess += [0.3*max_counts, 0.5*(bound[1]-bound[0]) + bound[0], width]
 
             #lower bound height = 0 | lower bound position: the one provided | lower bound width = 1
-            param_bounds_low += [0,bound[0], 1] 
+            param_bounds_low += [0,bound[0], 0] 
 
             #upper bound height = 110% max height | upper bound position: the one provided | upper bound width: 20 if width<10, 60 if 10<width<30, 200 if width>30
-            param_bounds_high += [1.1*max_counts, bound[1], 20 if width<=10 else 60 if width<30 else 300]
+            param_bounds_high += [1.1*max_counts, bound[1], 3*width]
 
         return init_guess, (param_bounds_low, param_bounds_high)
 
