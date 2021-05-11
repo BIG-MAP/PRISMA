@@ -143,7 +143,8 @@ class FitPeaks:
                         'Peak lineshapes': lineshape,
                         'Number of peaks': len(guess_widths),
                         'Initial widths':  guess_widths,
-                        'Position bounds': peak_bounds} 
+                        'Position bounds': peak_bounds, 
+                        'Fitting success': False} 
 
         new_energies = spectrum.energies
         
@@ -151,14 +152,22 @@ class FitPeaks:
         init_guess, param_bounds = FitPeaks.bound_formatting(peak_bounds, guess_widths, np.amax(spectrum.counts)) 
         fitting_function, single_peak_function = FitPeaks.fitting_functions(lineshape = lineshape, number_of_peaks = new_metadata['Number of peaks'])
 
+        #fitting 
+        try:               
+            fitted_coeffs,_ = curve_fit(fitting_function, spectrum.energies, spectrum.counts, p0=init_guess, bounds=param_bounds) 
 
-        #fitting        
-        fitted_coeffs,_ = curve_fit(fitting_function, spectrum.energies, spectrum.counts, p0=init_guess, bounds=param_bounds) 
+            #store peaks and peak sum
+            new_profiles = {peak_n : single_peak_function(spectrum.energies, *(np.append(fitted_coeffs[0],fitted_coeffs[3*peak_n+1:3*peak_n+4]))) for peak_n in range(new_metadata['Number of peaks'])}
+            new_counts = (fitting_function(spectrum.energies, *fitted_coeffs)) #evaluate wavenumbers with the fitted coefficients
 
+            new_metadata['Fitting success'] = True
 
-        #store peaks and peak sum
-        new_profiles = {peak_n : single_peak_function(spectrum.energies, *(np.append(fitted_coeffs[0],fitted_coeffs[3*peak_n+1:3*peak_n+4]))) for peak_n in range(new_metadata['Number of peaks'])}
-        new_counts = (fitting_function(spectrum.energies, *fitted_coeffs)) #evaluate wavenumbers with the fitted coefficients
+        except RuntimeError:
+            nan_vector = np.full(len(new_energies), np.nan)
+            fitted_coeffs = np.full(3*new_metadata['Number of peaks']+1, np.nan)
+            new_profiles = {peak_n : nan_vector for peak_n in range(new_metadata['Number of peaks'])}
+            new_counts = nan_vector
+            new_metadata['Fitting success'] = False
 
 
         #store fitting parameters

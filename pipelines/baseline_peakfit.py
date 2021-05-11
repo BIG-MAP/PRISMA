@@ -67,7 +67,9 @@ class BaselinePeakFitting:
     def aux_refresh_plots(self,label, also_peaks = False):
         self.subapps['Plot Baseline'].update_marks(self.spectra[label]['root'],
                                                    self.spectra[label]['processed'])
-        if also_peaks:
+
+        #if plot peaks is requested AND the fitting was successful
+        if (also_peaks) and (self.spectra[label]['fitted'].metadata['Fitting success']):
             try:
                 self.subapps['Plot Peaks'].update_marks(spectrum_original = self.spectra[label]['processed'],
                                                         spectrum_fit = self.spectra[label]['fitted'])

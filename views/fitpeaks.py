@@ -208,18 +208,26 @@ class ViewFitPeaks:
 
         self.widget['Out_fitted_params'].clear_output()
 
-        peak_parameters = {'Center':[], 'Height':[], 'Width':[]}
-        fitted_parameters_keys = list(spectrum.metadata['Fitted parameters'].keys())
-        fitted_parameters_keys.sort()
 
-        for key in fitted_parameters_keys:
-            if key.startswith('p'):
-                peak_parameters['Center'].append(spectrum.metadata['Fitted parameters'][key])
-            elif key.startswith('h'):
-                peak_parameters['Height'].append(spectrum.metadata['Fitted parameters'][key])
-            elif key.startswith('w'):
-                peak_parameters['Width'].append(spectrum.metadata['Fitted parameters'][key])
-            
-        with self.widget['Out_fitted_params']:
-            display(pd.DataFrame(peak_parameters, columns = list(peak_parameters.keys())).T)
+        if spectrum.metadata['Fitting success']:
+
+            peak_parameters = {'Center':[], 'Height':[], 'Width':[]}
+            fitted_parameters_keys = list(spectrum.metadata['Fitted parameters'].keys())
+            fitted_parameters_keys.sort()
+
+            for key in fitted_parameters_keys:
+                if key.startswith('p'):
+                    peak_parameters['Center'].append(spectrum.metadata['Fitted parameters'][key])
+                elif key.startswith('h'):
+                    peak_parameters['Height'].append(spectrum.metadata['Fitted parameters'][key])
+                elif key.startswith('w'):
+                    peak_parameters['Width'].append(spectrum.metadata['Fitted parameters'][key])
+
+            with self.widget['Out_fitted_params']:
+                display(pd.DataFrame(peak_parameters, columns = list(peak_parameters.keys())).T)
+
+        else:
+            with self.widget['Out_fitted_params']:
+                display(wdg.HTML(value='<p style="color:Tomato;"> The fitting did not converge. Try new bounds/widths</p>'))
+
 
