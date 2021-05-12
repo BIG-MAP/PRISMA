@@ -8,7 +8,7 @@ class Parsers:
 
     available_parsers = {'Single .csv':          {'multiple files': False,'file format':'.csv'},
                          'Single .txt (Bruker)': {'multiple files': False,'file format':'.txt'},
-                         'Multiple .txt':        {'multiple files': True, 'file format':'.txt'}}    
+                         'Multiple .txt':        {'multiple files': True, 'file format':'*'}}    
 
 
     @staticmethod
