@@ -187,10 +187,12 @@ class BaselinePeakFitting:
     def batch_processing(self):        
         baseline_parameters = self.subapps['Baseline'].inputs
         peakfit_parameters = self.subapps['FitPeaks'].inputs
+        unsuccessful_fits = []
 
         if (not peakfit_parameters['Bounds']) or (not self.spectra):
             pass
         else:
+            
             for label in self.spectra.keys():
                 trimmed_spectrum = Preprocessing().trimming(self.spectra[label]['root'], 
                                                             within=baseline_parameters['Trim'])
@@ -203,6 +205,10 @@ class BaselinePeakFitting:
                                                                     guess_widths = peakfit_parameters['Widths'],
                                                                     lineshape = peakfit_parameters['Lineshape'])
 
+                if not self.spectra[label]['fitted'].metadata['Fitting success']:
+                    unsuccessful_fits.append(label)
+
+        return unsuccessful_fits
 
 
     def export_batch_processing_payloads(self):

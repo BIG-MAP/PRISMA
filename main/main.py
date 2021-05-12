@@ -111,9 +111,16 @@ class Main:
 
 
     def __run_batch_processing(self, _):
-        self.subapps['pipeline'].batch_processing()
+
+        self.subapps['batch_processing'].update_processing_log(log='start')
+        unsuccessful_fits = self.subapps['pipeline'].batch_processing()
+
         csv_payloads = self.subapps['pipeline'].export_batch_processing_payloads()
         self.subapps['batch_processing'].prepare_payload_downloads(csv_payloads)
+
+        self.subapps['batch_processing'].update_processing_log(log=unsuccessful_fits)
+
+
    
 
 

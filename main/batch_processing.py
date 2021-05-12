@@ -25,12 +25,15 @@ class BatchProcessing:
         self.widget['Button_run'] = wdg.Button(description='Run Batch Processing', 
                                                icon='play', disabled = True, 
                                                style = {'description_width': 'initial'})
+        
+        self.widget['HTML_log'] = wdg.HTML(value='')
                                                
         self.widget['Label_results'] = wdg.HTML(value="<h4>Download results </h4>")
 
         self.widget['Buttons_download'] = wdg.HTML(value='')
 
         self.widgetbox['batchrun'] = wdg.VBox([self.widget['Button_run'],
+                                                self.widget['HTML_log'],
                                                self.widget['Label_results'],
                                                self.widget['Buttons_download']])        
 
@@ -62,7 +65,7 @@ class BatchProcessing:
 
 
     def aux_render_input_summary(self, inputs):
-        html_text = '<h5>Review Parameters </h5>'
+        html_text = '<h4>Review Parameters </h4>'
         for key in inputs.keys():
             html_text += '<p><u>{}</u></p><p>'.format(key)
         #parent keys: Files, Baseline, Peakfit
@@ -99,3 +102,12 @@ class BatchProcessing:
             
 
 
+    def update_processing_log(self, log='start'):
+        processing_start_msg = """<p style="color:DodgerBlue;">Processing...</p>"""
+
+        if log == 'start':
+            self.widget['HTML_log'].value = processing_start_msg
+        elif isinstance(log,list):
+            for label in log:
+                processing_start_msg += """<p style="color:Tomato;">Fitting on "{}" did not converge</p>""".format(label)
+            self.widget['HTML_log'].value = processing_start_msg + """<p style="color:MediumSeaGreen;">Processing finished</p>"""

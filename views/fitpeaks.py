@@ -230,10 +230,10 @@ class ViewFitPeaks:
             with self.widget['Out_fitted_params']:
                 display(wdg.HTML(value="""<p style="color:Tomato;"> The fitting did not converge. Try:</p> 
                                             <ul style="color:Tomato;">
-                                            <li>Modifying the peak bounds</li>
-                                            <li>Improving the width guesses</li>
-                                            <li>Narrowing the trim range</li>
                                             <li>Changing the lineshape</li>
+                                            <li>Improving the width guesses</li>
+                                            <li>Modifying the peak bounds</li>                                            
+                                            <li>Narrowing the trim range</li>                                            
                                             </ul>"""))
 
 
