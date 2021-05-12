@@ -100,11 +100,11 @@ class FitPeaks:
             #guess height = 30% maximum height  | guess position: halfway between bounds | guess width: the one provided
             init_guess += [0.3*max_counts, 0.5*(bound[1]-bound[0]) + bound[0], width]
 
-            #lower bound height = 0 | lower bound position: the one provided | lower bound width = 1
-            param_bounds_low += [0,bound[0], 0] 
+            #lower bound height = 0 | lower bound position: the one provided | lower bound width: adaptive depending on width
+            param_bounds_low += [0, bound[0], 0 if width<1 else 1 if width<200 else 10] 
 
-            #upper bound height = 110% max height | upper bound position: the one provided | upper bound width: 20 if width<10, 60 if 10<width<30, 200 if width>30
-            param_bounds_high += [1.1*max_counts, bound[1], 3*width]
+            #upper bound height = 110% max height | upper bound position: the one provided | upper bound width: adaptive depending on bounds
+            param_bounds_high += [1.1*max_counts, bound[1], 10*width]
 
         return init_guess, (param_bounds_low, param_bounds_high)
 
@@ -154,7 +154,7 @@ class FitPeaks:
 
         #fitting 
         try:               
-            fitted_coeffs,_ = curve_fit(fitting_function, spectrum.energies, spectrum.counts, p0=init_guess, bounds=param_bounds) 
+            fitted_coeffs,_ = curve_fit(fitting_function, spectrum.energies, spectrum.counts, p0=init_guess, bounds=param_bounds, ftol=1e-6) 
 
             #store peaks and peak sum
             new_profiles = {peak_n : single_peak_function(spectrum.energies, *(np.append(fitted_coeffs[0],fitted_coeffs[3*peak_n+1:3*peak_n+4]))) for peak_n in range(new_metadata['Number of peaks'])}
