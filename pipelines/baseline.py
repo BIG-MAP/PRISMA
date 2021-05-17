@@ -106,13 +106,19 @@ class BaselineCorrection:
         payload, parser_name = self.aux_get_payload_from_file_upload(button_upload['new'])   
 
         self.spectra, self.spectra_metadata = Parsers().parse(payload, parser_name)
-        list_of_spectra = list(self.spectra.keys())
-        list_of_spectra.sort()
 
-        self.subapps['Load'].display_spectra_names(list_of_spectra)
-        self.subapps['Baseline'].set_trim_limits(self.spectra_metadata['energy_limits'])
-        self.subapps['Baseline'].set_trim_limits(trim_limits = self.spectra_metadata['energy_limits'], 
-                                                n_datapoints = self.spectra_metadata['number_of_datapoints'])
+        if not self.spectra:
+            self.subapps['Load'].display_loading_error(self.spectra_metadata['error'])
+
+        else: 
+            self.subapps['Load'].clear_loading_error()
+
+            list_of_spectra = list(self.spectra.keys())
+            list_of_spectra.sort()
+
+            self.subapps['Load'].display_spectra_names(list_of_spectra)
+            self.subapps['Baseline'].set_trim_limits(trim_limits = self.spectra_metadata['energy_limits'], 
+                                                    n_datapoints = self.spectra_metadata['number_of_datapoints'])
 
 
     def callback_update_processing(self,_):

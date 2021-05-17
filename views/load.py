@@ -22,6 +22,8 @@ class ViewLoad:
         default_parser = list(self.parsers.keys())[0]        
         self.widget['Ddn_parser'] = wdg.Dropdown(options=self.parsers.keys(), value=default_parser, description='Parser')
 
+        self.widget['HTML_error'] = wdg.HTML(value='')
+
         #keeping the default '--' option avoids changing the widgets value when updating the options, and so avoids triggering another callback
         self.widget['Sct_spectra'] = wdg.Select(options=['--'], value='--') 
 
@@ -34,7 +36,11 @@ class ViewLoad:
                                                     multiple = self.parsers[default_parser]['multiple files'])                                                    
    
         
-        self.widgetbox['load_spectra'] = wdg.VBox([self.widget['Ddn_parser'],self.widget['Fld_spectra'],self.widget['Sct_spectra']])
+        self.widgetbox['load_spectra'] = wdg.VBox([self.widget['Ddn_parser'],
+                                                    self.widget['Fld_spectra'],
+                                                    self.widget['HTML_error'] , 
+                                                    self.widget['Sct_spectra']])
+
         self.widgetbox['load_spectra'].layout = {'display':'flex','flex_flow':'column','align_content': 'center'} 
 
 
@@ -80,6 +86,11 @@ class ViewLoad:
                                                 <button class="p-Widget jupyter-widgets jupyter-button widget-button">Donwload spectrum</button>
                                                 </a>""".format(filename=filename, payload=payload)
 
+    def display_loading_error(self,error_msg):        
+        self.widget['HTML_error'].value = """<p style="color:Tomato;">Error: {}</p>""".format(error_msg)
+
+    def clear_loading_error(self):
+        self.widget['HTML_error'].value = ''
 
 
     @property
