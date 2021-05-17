@@ -101,15 +101,15 @@ class PeakFitting:
     def callback_upload_spectra(self, button_upload):
         payload, parser_name = self.aux_get_payload_from_file_upload(button_upload['new'])   
 
-        self.spectra, spectra_metadata = Parsers().parse(payload, parser_name)
+        self.spectra, self.spectra_metadata = Parsers().parse(payload, parser_name)
         list_of_spectra = list(self.spectra.keys())
         list_of_spectra.sort()
 
         self.subapps['Load'].display_spectra_names(list_of_spectra)
-        self.subapps['FitPeaks'].set_bound_limits(bound_limits = spectra_metadata['energy_limits'],
-                                                n_datapoints = spectra_metadata['number_of_datapoints'])
-        self.subapps['FitPeaks'].set_width_limits(bound_limits = spectra_metadata['energy_limits'],
-                                                n_datapoints = spectra_metadata['number_of_datapoints'])
+        self.subapps['FitPeaks'].set_bound_limits(bound_limits = self.spectra_metadata['energy_limits'],
+                                                n_datapoints = self.spectra_metadata['number_of_datapoints'])
+        self.subapps['FitPeaks'].set_width_limits(bound_limits = self.spectra_metadata['energy_limits'],
+                                                n_datapoints = self.spectra_metadata['number_of_datapoints'])
 
     
     def callback_select_spectrum(self,_):
@@ -154,15 +154,25 @@ class PeakFitting:
 
     def batch_processing(self):        
         peakfit_parameters = self.subapps['FitPeaks'].inputs
+        unsuccessful_fits = []
 
         if (not peakfit_parameters['Bounds']) or (not self.spectra):
             pass
+
+        elif self.spectra_metadata['common_energy_axis'] == False:
+            unsuccessful_fits = 'multiple energy axes'
+
         else:
             for label in self.spectra.keys():
                 self.spectra[label]['fitted'] = FitPeaks().fit_peaks(self.spectra[label]['root'], 
                                                                     peak_bounds = peakfit_parameters['Bounds'], 
                                                                     guess_widths = peakfit_parameters['Widths'],
                                                                     lineshape = peakfit_parameters['Lineshape'])
+
+                if not self.spectra[label]['fitted'].metadata['Fitting success']:
+                    unsuccessful_fits.append(label)
+
+        return unsuccessful_fits
 
 
     def export_batch_processing_payloads(self):

@@ -196,8 +196,7 @@ class BaselinePeakFitting:
         elif self.spectra_metadata['common_energy_axis'] == False:
             unsuccessful_fits = 'multiple energy axes'
 
-        else:
-            
+        else:            
             for label in self.spectra.keys():
                 trimmed_spectrum = Preprocessing().trimming(self.spectra[label]['root'], 
                                                             within=baseline_parameters['Trim'])
