@@ -11,23 +11,25 @@ class Preprocessing:
         """ Trim raw spectrum
         * within [float,float]: lower and upper limits of the range to be studied 
         """  
-        batt_info_id = '0XH81'
+        batt_info_id = '0XH81'        
+        new_metadata = {'Process':'Trimming','Process ID': batt_info_id}
 
-        #check the interval        
-        if len(within) == 2 and within[0] >= min(spectrum.energies) and within[1] <= max(spectrum.energies): 
+        idxs_within = np.where((spectrum.energies>within[0]) & (spectrum.energies<within[1]),True, False) #nparray of booleans
 
-            idxs_within = np.where((spectrum.energies>within[0]) & (spectrum.energies<within[1]),True, False) #nparray of booleans
-
-            new_metadata = {'Process':'Trimming','Process ID': batt_info_id, 'Trim interval': within}
-            new_energies = spectrum.energies[idxs_within] 
-            new_counts   = spectrum.counts[idxs_within]
-
-            return SpectrumProcessed(energies = new_energies, counts = new_counts, parent = spectrum, metadata = new_metadata)
+        #trimming interval outside spectrum.energies
+        if np.all(~idxs_within):
+            new_energies = spectrum.energies
+            new_counts   = spectrum.counts
 
         else:
-            #ERROR 'within' interval outside the wavenumber region or not recognized             
-            spectrum.trimmed['metadata'] = {'trim interval': 'Error: Trim intervals outside the energy region'}
-            return None
+            new_energies = spectrum.energies[idxs_within] 
+            new_counts   = spectrum.counts[idxs_within]
+            new_metadata['Trim interval'] = within
+
+        
+        new_metadata['Trim interval'] = [min(within[0],np.amin(spectrum.energies)),max(within[1],np.amax(spectrum.energies))]
+
+        return SpectrumProcessed(energies = new_energies, counts = new_counts, parent = spectrum, metadata = new_metadata)
 
 
 

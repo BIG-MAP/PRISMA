@@ -154,7 +154,7 @@ class FitPeaks:
 
         #fitting 
         try:               
-            fitted_coeffs,_ = curve_fit(fitting_function, spectrum.energies, spectrum.counts, p0=init_guess, bounds=param_bounds, ftol=1e-6) 
+            fitted_coeffs,_ = curve_fit(fitting_function, spectrum.energies, spectrum.counts, p0=init_guess, bounds=param_bounds, ftol=1e-8) 
 
             #store peaks and peak sum
             new_profiles = {peak_n : single_peak_function(spectrum.energies, *(np.append(fitted_coeffs[0],fitted_coeffs[3*peak_n+1:3*peak_n+4]))) for peak_n in range(new_metadata['Number of peaks'])}
