@@ -107,6 +107,11 @@ class BatchProcessing:
 
         if log == 'start':
             self.widget['HTML_log'].value = processing_start_msg
+
+        elif log == 'multiple energy axes':
+            self.widget['HTML_log'].value = """<p style="color:Tomato;">Batch processing not supported for spectra that do not share a common energy (wavenumber, wavelenght, etc) axis.</p>
+                                               <p style="color:Tomato;">Analizying and downloading individual spectra is still possible from the "Explore Processing Parameters" tab</p>"""
+
         elif isinstance(log,list):
             for label in log:
                 processing_start_msg += """<p style="color:Tomato;">Fitting on "{}" did not converge</p>""".format(label)

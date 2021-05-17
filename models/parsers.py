@@ -49,7 +49,7 @@ class Parsers:
                 label, counts = temporary_array[0], temporary_array[1:]             
                 spectra[label] = {'root': Spectrum(energies = energies, counts = counts, name=label)} #for every line of counts, instatiate spectrum
 
-
+        spectra_metadata['common_energy_axis'] = True
         spectra_metadata['energy_limits']=[np.amin(energies),np.amax(energies)]
         spectra_metadata['number_of_spectra'] = len(spectra)   
         spectra_metadata['number_of_datapoints'] = len(energies)
@@ -81,7 +81,7 @@ class Parsers:
         for label, column in zip(spectra_names, spectra_data.T[1:]):
             spectra[label] = {'root': Spectrum(energies = energies, counts = column, name=label)} #instatiate spectrum
 
-
+        spectra_metadata['common_energy_axis'] = True
         spectra_metadata['energy_limits']=[np.amin(energies),np.amax(energies)]
         spectra_metadata['number_of_spectra'] = len(spectra) 
         spectra_metadata['number_of_datapoints'] = len(energies)  
@@ -92,17 +92,25 @@ class Parsers:
 
 
     @staticmethod
-    def multiple_txt(upload: dict):
+    def multiple_txt(upload: dict):        
 
         #initialize variables
         energies_min, energies_max, n_datapoints = float('inf'), -float('inf'), 0 
-        spectra, spectra_metadata = {}, {}
+        first_energy_axis = np.array([])
+        spectra, spectra_metadata = {}, {'common_energy_axis': True} 
 
         for label, bitstream in upload.items():
 
             #read byte string with spectrum values    
             array = np.array(bitstream.split(sep=None))
             energies, counts = array.reshape((int(len(array)/2),2)).astype('float64').T 
+
+            #check if spectra share energy axis
+            if not np.any(first_energy_axis):
+                first_energy_axis = energies
+            elif not np.array_equal(first_energy_axis,energies):
+                spectra_metadata['common_energy_axis'] = False
+                
 
             #update overall minimum and maximum values of energy, and the maximum number of datapoints
             current_minimum_energy_value = np.amin(energies)

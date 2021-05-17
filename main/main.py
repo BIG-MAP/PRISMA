@@ -115,10 +115,13 @@ class Main:
         self.subapps['batch_processing'].update_processing_log(log='start')
         unsuccessful_fits = self.subapps['pipeline'].batch_processing()
 
-        csv_payloads = self.subapps['pipeline'].export_batch_processing_payloads()
-        self.subapps['batch_processing'].prepare_payload_downloads(csv_payloads)
+        if unsuccessful_fits == 'multiple energy axes':
+            self.subapps['batch_processing'].update_processing_log(log='multiple energy axes')
 
-        self.subapps['batch_processing'].update_processing_log(log=unsuccessful_fits)
+        else:
+            csv_payloads = self.subapps['pipeline'].export_batch_processing_payloads()
+            self.subapps['batch_processing'].prepare_payload_downloads(csv_payloads)
+            self.subapps['batch_processing'].update_processing_log(log=unsuccessful_fits)
 
 
    
