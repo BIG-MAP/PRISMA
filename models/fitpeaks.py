@@ -21,7 +21,7 @@ class Lineshapes:
         expression = 'lambda x,y0'
 
         for h, p, w in zip(height_labels,position_labels,width_labels):
-            equation += '+ {0}*({2}**2)/((x-{1})**2 + {2}**2)'.format(h,p,w) 
+            equation += '+ {0}/(((x-{1})**2)/({2}**2) + 1)'.format(h,p,w) 
             expression += ',{0},{1},{2}'.format(h,p,w)
 
         return eval(expression + ': ' + equation)
@@ -59,14 +59,13 @@ class Lineshapes:
         width_labels = ['w{}'.format(n) for n in range(1,npeaks+1)]
         position_labels = ['p{}'.format(n) for n in range(1,npeaks+1)]
 
-        lor_mix = 0.5
-        gauss_mix = 1-lor_mix
+        lor_mix = 0.5 #proportion og lorentzian. lor_mix = 1 - gauss_mix
 
         equation = 'y0'
         expression = 'lambda x,y0'
 
         for h, p, w in zip(height_labels,position_labels,width_labels):
-            equation += '+ {3}*{0}*(2.71828183**(-0.69314718*((x-{1})/{2})**2)) + {4}*({0}*({2}**2))/((x-{1})**2+{2}**2)'.format(h, p, w, lor_mix, gauss_mix)
+            equation += '+ {0}*({3}*(2.71828183**(-0.69314718*((x-{1})/{2})**2)) + (1-{3})/(((x-{1})**2)/({2}**2) + 1))'.format(h, p, w, lor_mix)
             expression += ',{0},{1},{2}'.format(h,p,w)
 
         return eval(expression + ': ' + equation)
@@ -83,28 +82,31 @@ class FitPeaks:
 
 
     @staticmethod
-    def bound_formatting(peak_bounds, guess_widths, max_counts):
+    def bound_formatting(peak_bounds, guess_widths, spectrum):
         #Format peak_bounds and peak_widhts to parameter bounds for the curve fit function
         # init_guess   --> initial guesses for the fitting parameters: [y0,h1,p1,w1,h2,p2,w2,h3,p3,w3,...]
         # param_bounds --> 2-tuple of lists with lower and upper bounds for the fitting parameters: ([y0,h1,p1,w1,...],[y0,h1,p1,w1,...])
+        overall_max_counts = np.amax(spectrum.counts)
 
         #Bounds for y0
         init_guess = [0] 
-        param_bounds_low = [-0.1*max_counts] 
-        param_bounds_high = [0.1*max_counts] 
+        param_bounds_low = [-0.1*overall_max_counts] 
+        param_bounds_high = [0.1*overall_max_counts] 
 
 
         #Bounds for all other parameters
         for width, bound in zip(guess_widths, peak_bounds):
+            
+            max_counts_within_bounds = np.amax(spectrum.counts[(spectrum.energies>bound[0]) & (spectrum.energies<bound[1])])
 
             #guess height = 30% maximum height  | guess position: halfway between bounds | guess width: the one provided
-            init_guess += [0.3*max_counts, 0.5*(bound[1]-bound[0]) + bound[0], width]
+            init_guess += [0.3*max_counts_within_bounds, 0.5*(bound[1]-bound[0]) + bound[0], width]
 
             #lower bound height = 0 | lower bound position: the one provided | lower bound width: adaptive depending on width
-            param_bounds_low += [0, bound[0], 0 if width<1 else 1 if width<200 else 10] 
+            param_bounds_low += [0, bound[0], 0 if width<10 else 1 if width<200 else 10] 
 
             #upper bound height = 110% max height | upper bound position: the one provided | upper bound width: adaptive depending on bounds
-            param_bounds_high += [1.1*max_counts, bound[1], 10*width]
+            param_bounds_high += [1.1*max_counts_within_bounds, bound[1], 10*width]
 
         return init_guess, (param_bounds_low, param_bounds_high)
 
@@ -149,7 +151,7 @@ class FitPeaks:
         new_energies = spectrum.energies
         
         #formatting bounds and define fitting functions with external static method
-        init_guess, param_bounds = FitPeaks.bound_formatting(peak_bounds, guess_widths, np.amax(spectrum.counts)) 
+        init_guess, param_bounds = FitPeaks.bound_formatting(peak_bounds, guess_widths, spectrum) 
         fitting_function, single_peak_function = FitPeaks.fitting_functions(lineshape = lineshape, number_of_peaks = new_metadata['Number of peaks'])
 
         #fitting 

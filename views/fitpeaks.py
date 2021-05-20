@@ -224,15 +224,15 @@ class ViewFitPeaks:
                     peak_parameters['Width'].append(spectrum.metadata['Fitted parameters'][key])
 
             with self.widget['Out_fitted_params']:
-                display(pd.DataFrame(peak_parameters, columns = list(peak_parameters.keys())).T)
+                display(pd.DataFrame(peak_parameters, columns = list(peak_parameters.keys())).T.sort_values(by = 'Center', axis = 1))
 
         else:
             with self.widget['Out_fitted_params']:
                 display(wdg.HTML(value="""<p style="color:Tomato;"> The fitting did not converge. Try:</p> 
                                             <ul style="color:Tomato;">
-                                            <li>Changing the lineshape</li>
-                                            <li>Improving the width guesses</li>
-                                            <li>Modifying the peak bounds</li>                                            
+                                            <li>Using more peaks</li>
+                                            <li>Changing the lineshape</li>                                            
+                                            <li>Improving the width guesses/peak bounds</li>                                                                                        
                                             <li>Narrowing the trim range</li>                                            
                                             </ul>"""))
 
