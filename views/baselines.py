@@ -44,11 +44,11 @@ class ViewBaselineAls:
 
 
 
-    def set_trim_limits(self, trim_limits, n_datapoints):
+    def set_trim_limits(self, trim_limits, min_resolvable_width):
         interval = trim_limits[1]-trim_limits[0]
         self.widget['Range_trim'].min = trim_limits[0]
         self.widget['Range_trim'].max = trim_limits[1]
-        self.widget['Range_trim'].step = 2*interval/n_datapoints
+        self.widget['Range_trim'].step = min_resolvable_width
         self.widget['Range_trim'].value = [trim_limits[0]+0.25*interval,trim_limits[0]+0.75*interval]
 
     

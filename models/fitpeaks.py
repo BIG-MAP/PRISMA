@@ -82,11 +82,13 @@ class FitPeaks:
 
 
     @staticmethod
-    def bound_formatting(peak_bounds, guess_widths, spectrum):
+    def bound_formatting(peak_bounds, max_widths, spectrum):
         #Format peak_bounds and peak_widhts to parameter bounds for the curve fit function
         # init_guess   --> initial guesses for the fitting parameters: [y0,h1,p1,w1,h2,p2,w2,h3,p3,w3,...]
         # param_bounds --> 2-tuple of lists with lower and upper bounds for the fitting parameters: ([y0,h1,p1,w1,...],[y0,h1,p1,w1,...])
         overall_max_counts = np.amax(spectrum.counts)
+
+        limit_resolvable_width = 4*np.abs(spectrum.energies[1]-spectrum.energies[0])
 
         #Bounds for y0
         init_guess = [0] 
@@ -95,18 +97,25 @@ class FitPeaks:
 
 
         #Bounds for all other parameters
-        for width, bound in zip(guess_widths, peak_bounds):
+        for width, bound in zip(max_widths, peak_bounds):
             
             max_counts_within_bounds = np.amax(spectrum.counts[(spectrum.energies>bound[0]) & (spectrum.energies<bound[1])])
 
-            #guess height = 30% maximum height  | guess position: halfway between bounds | guess width: the one provided
-            init_guess += [0.3*max_counts_within_bounds, 0.5*(bound[1]-bound[0]) + bound[0], width]
+            #guess height = 30% maximum height  | guess position: halfway between bounds | guess width: half the maximum width provided or 5% more of min_resolvable_width, whoever is greater
+            init_guess += [0.3*max_counts_within_bounds, 0.5*(bound[1]-bound[0]) + bound[0], max(1.05*limit_resolvable_width,width/2)]
 
-            #lower bound height = 0 | lower bound position: the one provided | lower bound width: adaptive depending on width
-            param_bounds_low += [0, bound[0], 0 if width<10 else 1 if width<200 else 10] 
+            #lower bound height = 0 | lower bound position: the one provided | lower bound width: minimum resolvable width
+            param_bounds_low += [0, bound[0], limit_resolvable_width] 
 
-            #upper bound height = 110% max height | upper bound position: the one provided | upper bound width: adaptive depending on bounds
-            param_bounds_high += [1.1*max_counts_within_bounds, bound[1], 10*width]
+            #upper bound height = 110% max height | upper bound position: the one provided | upper bound width: the one provided or 10% more of min_resolvable_width, whoever is greater
+            param_bounds_high += [1.1*max_counts_within_bounds, bound[1], max(1.1*limit_resolvable_width,width)]
+
+        # print('low bounds:')
+        # print(param_bounds_low)
+        # print('init guess:')
+        # print(init_guess)
+        # print('high bounds:')
+        # print(param_bounds_high)
 
         return init_guess, (param_bounds_low, param_bounds_high)
 

@@ -52,7 +52,7 @@ class ViewFitPeaks:
 
         self.widget['Slider_width'] = wdg.FloatSlider(value=50.0,min=1.0,max=300.0,step=1,
                                                       orientation='horizontal',
-                                                      description='Guess width',
+                                                      description='Max. width',
                                                       continuous_update=False)
 
         self.widget['Button_peakfit'] = wdg.Button(description='Peak fit', icon='area-chart', 
@@ -154,19 +154,19 @@ class ViewFitPeaks:
             
     #------------------------- API ------------------------------------
 
-    def set_bound_limits(self, bound_limits, n_datapoints):
+    def set_bound_limits(self, bound_limits, min_resolvable_width):
         interval = bound_limits[1]-bound_limits[0]
         self.widget['Range_bounds'].min = bound_limits[0]
         self.widget['Range_bounds'].max = bound_limits[1]        
-        self.widget['Range_bounds'].step = 2*interval/n_datapoints
+        self.widget['Range_bounds'].step = min_resolvable_width
         self.widget['Range_bounds'].value = [bound_limits[0]+0.25*interval,bound_limits[0]+0.75*interval]
         
 
-    def set_width_limits(self, bound_limits, n_datapoints):
+    def set_width_limits(self, bound_limits, min_resolvable_width):
         interval = bound_limits[1]-bound_limits[0]
-        self.widget['Slider_width'].min = 2*interval/n_datapoints
+        self.widget['Slider_width'].min = 4*min_resolvable_width
         self.widget['Slider_width'].max = 0.25*interval
-        self.widget['Slider_width'].step = 2*interval/n_datapoints
+        self.widget['Slider_width'].step = min_resolvable_width
         self.widget['Slider_width'].value = 0.25*interval + bound_limits[0]
 
     

@@ -114,9 +114,9 @@ class PeakFitting:
 
             self.subapps['Load'].display_spectra_names(list_of_spectra)
             self.subapps['FitPeaks'].set_bound_limits(bound_limits = self.spectra_metadata['energy_limits'],
-                                                    n_datapoints = self.spectra_metadata['number_of_datapoints'])
+                                                    min_resolvable_width = self.spectra_metadata['min_resolvable_width'])
             self.subapps['FitPeaks'].set_width_limits(bound_limits = self.spectra_metadata['energy_limits'],
-                                                    n_datapoints = self.spectra_metadata['number_of_datapoints'])
+                                                    min_resolvable_width = self.spectra_metadata['min_resolvable_width'])
 
     
     def callback_select_spectrum(self,_):
