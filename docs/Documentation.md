@@ -104,7 +104,7 @@ returns a function of a number of profiles. The returned function is: `returned_
 #### Lorentzians
 `prisma.lineshapes.lorentzians(npeaks)`  
 Generate a function of npeaks number of lorenztian profiles.  The lorentz profile is described by the analytical expression:  
-$$ L(x) = \frac{hw^2}{(x-p)^2+w^2}$$  
+$$L(x) = \frac{hw^2}{(x-p)^2+w^2}$$  
 where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as $A=\pi hw$.
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
@@ -114,7 +114,7 @@ where $h, p, w$ represent the height, position and half-width at half maximum of
 #### Gaussians
 `prisma.lineshapes.lorentzians(npeaks)`  
 Generate a function of npeaks number of gaussian profiles.  The gaussian profile is described by the analytical expression:  
-$$ G(x) = h\exp\left(\frac{\ln(2)(x-p)^2}{w^2}\right)$$  
+$$G(x) = h\exp\left(\frac{\ln(2)(x-p)^2}{w^2}\right)$$  
 where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as $A=hw\sqrt{\frac{\pi}{\ln(2)}}$.
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
@@ -124,7 +124,7 @@ where $h, p, w$ represent the height, position and half-width at half maximum of
 #### Pseudo-Voight: 50% Lorentzian
 `prisma.lineshapes.pseudo_voight_50(npeaks)`  
 Generate a function of npeaks number of pseudo-voight profiles (50% Lorentzian).  The pseudo-voight profile is described by the analytical expression:  
-$$ P_{50\%}(x) = \frac{1}{2}G(x) + \frac{1}{2}L(x)$$  
+$$P_{50\%}(x) = \frac{1}{2}G(x) + \frac{1}{2}L(x)$$  
 > **Arguments**
 >* `npeaks`: Number of pseudo-voight curves.  
 
