@@ -19,11 +19,13 @@ Thats it! You are ready to go. To launch the app, go back to the main folder and
 
 **For Python-savvy users**   
 
-While this is an operating version of PRISMA, we are still working in a stable version, i.e. without package incompatibilities, to release to Pypi. In the meantime, you can install PRISMA by:
+While this is an operating version of PRISMA, we are still working in a stable version without package incompatibilities, that we can release to Pypi and/or Anaconda. In the meantime, you can install PRISMA by:
 * Cloning the repository (donwload it or `git clone`)
 * Creating a conda environment based on the *requirements.yml* file. 
-* Install prisma from the root directory (where the setup file is) using `pip install ./`
-* If you wish to use the GUI as well, make sure to install a jupyter kernel using prisma. Run the following command after activating prisma's conda environment: `ipython kernel install --user --name=prisma`. After, open and run  the gui.ipynb notebook located in the ./gui directory. In the following links you can find more information about [jupyter kernels](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) and [how to manage them](https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove).
+* Activating the created environment and installing prisma from the root directory (where the setup file is) using `pip install .`
+* If you wish to use PRISMA from Jupyter or use the GUI as well, make sure to install a PRISMA jupyter kernel. Run the following command after activating prisma's conda environment: `ipython kernel install --user --name=prisma`. After, open and run  the gui.ipynb notebook located in the ./gui directory. In the following links you can find more information about [jupyter kernels](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) and [how to manage them](https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove).
+
+>**Note:** These steps are automated in the scritps provided in the [autoinstall](./autoinstall) directory
 
 >**Note:** Conda is used as environment manager and Python distribution because we found it to be the easiest way to install PRISMA in PCs with no admin rights, which is the case in many academic institutions. Some PCs do not even allow to install vanilla Python without admin rights. A compiled .exe is even more difficult to install. To our knowledge, there is no way easier than CONDA to go from developing Python source code to deploying in an user's PC; but we are always open to new ideas, developements and suggestions.
 
@@ -40,7 +42,7 @@ The results are exported as .csv files ready for plotting.
 ![General Workflow](./docs/figures//general_workflow.png)
 
 # Use: as a package
-We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete documentation in the [docs](./docs) directory.
+We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete documentation in the [docs](./docs) directory. If you wish to run the examples.ipynb make sure to have installed a prisma jupyter kernel as specified above.
 
 
 # Cite
