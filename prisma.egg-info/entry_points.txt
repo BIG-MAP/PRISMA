@@ -1,0 +1,3 @@
+[console_scripts]
+prismaapp = prisma.__main__:main
+

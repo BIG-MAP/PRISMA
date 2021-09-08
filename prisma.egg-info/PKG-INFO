@@ -1,3 +1,14 @@
+Metadata-Version: 2.1
+Name: prisma
+Version: 0.1.0
+Summary: A robust and intuitive tool for high-throughput processing of spectra
+Home-page: https://github.com/eibfl-dtu/PRISMA
+Author: Eibar Flores
+Author-email: eibfl@dtu.dk
+License: LICENSE.txt
+Platform: UNKNOWN
+License-File: LICENSE.txt
+
 ![Logo](./prisma/static/logo1.png) 
 # PRISMA App
 
@@ -58,5 +69,7 @@ See the API documentation for more details.
 Eibar Flores  
 Technical University Denmark  
 eibfl@dtu.dk
+
+
 
 
