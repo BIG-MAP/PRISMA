@@ -1,4 +1,4 @@
-name: PRISMA
+name: prisma
 channels:
   - conda-forge
   - defaults
