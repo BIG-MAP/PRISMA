@@ -1,5 +1,5 @@
-![Logo](./figures/logo1.png) 
-# PRISMA MODELS API
+![Logo](./figures/logo.png) 
+# PRISMA Documentation
 PRISMA consist of a collection of spectrum-processing functions that operate over spectrum objects. In essence, the parsers load datasets into spectrum objects, that can be operated with the functions implemented. The functions output spectrum objects as well.
 
 
