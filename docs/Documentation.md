@@ -103,9 +103,12 @@ Function generators according to a linehsape. Each function generator constructs
 returns a function of a number of profiles. The returned function is: `returned_function(x, y0, h1, p1, w1, h2, p2, w2 ,h3 ,p3 ,w3...)`, where y0 is the intercept and hn, pn, wn correond to the height, position and width of the n-th peak.  These functions can be used to generate, e.g. synthetic spectra.
 #### Lorentzians
 `prisma.lineshapes.lorentzians(npeaks)`  
-Generate a function of npeaks number of lorenztian profiles.  The lorentz profile is described by the analytical expression:  
-$$L(x) = \frac{hw^2}{(x-p)^2+w^2}$$  
-where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as $A=\pi hw$.
+Generate a function of npeaks number of lorenztian profiles.  The lorentz profile is described by the analytical expression  
+
+![Lorentzian](./figures/eqn_lor.png)   
+
+where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as  ![Lorentzian area](./figures/eqn_area_lor.png)  
+
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
 
@@ -114,8 +117,9 @@ where $h, p, w$ represent the height, position and half-width at half maximum of
 #### Gaussians
 `prisma.lineshapes.lorentzians(npeaks)`  
 Generate a function of npeaks number of gaussian profiles.  The gaussian profile is described by the analytical expression:  
-$$G(x) = h\exp\left(\frac{\ln(2)(x-p)^2}{w^2}\right)$$  
-where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as $A=hw\sqrt{\frac{\pi}{\ln(2)}}$.
+![Gaussian](./figures/eqn_gauss.png)  
+where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as   
+![Guassian area](./figures/eqn_area_gauss.png)
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
 
@@ -124,7 +128,7 @@ where $h, p, w$ represent the height, position and half-width at half maximum of
 #### Pseudo-Voight: 50% Lorentzian
 `prisma.lineshapes.pseudo_voight_50(npeaks)`  
 Generate a function of npeaks number of pseudo-voight profiles (50% Lorentzian).  The pseudo-voight profile is described by the analytical expression:  
-$$P_{50\%}(x) = \frac{1}{2}G(x) + \frac{1}{2}L(x)$$  
+![Pseudo-Voight 50% Lorentzian](./figures/eqn_pv.png)   
 > **Arguments**
 >* `npeaks`: Number of pseudo-voight curves.  
 

@@ -5,7 +5,9 @@ PRISMA is a Jupyter-based app for high-throughput analysis of spectra. The app a
 
 # License
 * Which License to use?
-    * My dependencies: python, numpy, scipy, bqplot, jupyter lab, ipywidgets
+    * My dependencies: python, numpy, scipy, bqplot, jupyter lab, ipywidgets, voila  
+
+# Cite
 
 # Installation
 ## Click-and-play installation
@@ -39,22 +41,36 @@ In the following links you can find more information about [jupyter kernels](htt
 >**Note for Python savvy users** Conda is used as environment manager and Python distribution because we found it to be the easiest way to install PRISMA in PCs with no admin rights, which is the case in many academic institutions. Some PCs do not even allow to install vanilla Python without admin rights. A compiled .exe is even more difficult to install. To our knowledge, there is no way easier than CONDA to go from developing Python source code to deploying in an user's PC; but we are always open to new ideas, developements and suggestions.
 
 # Use: as an app
-The general workflow to use the app consist of:
-1. Select a pipeline, i.e. the type of analysis
-2. Load raw data
-3. Explore processing parameters
-4. Apply optimal parameters to all spectra
-5. Export the results  
+The general workflow to use the app consist of i) choosing a pipeline (i.e. a series of processing steps), ii) exploring processing parameters and iii) running a high-throughput analysis applying the same parameters to all spectra. These three steps are divided as tabs in the GUI. The illustration below shows an example of typical steps when performing baseline substraction followed by peak fitting:
 
-The results are exported as .csv files ready for plotting.
 
-![General Workflow](./docs/figures//general_workflow.png)
+![General Workflow](./docs/figures/app_use.png)  
+1. Select a pipeline
+2. Select a parser. Each parser reads spectra stored in a specific file format. [docs](./docs) to see the file formats accepted by each parser.
+3. Load spectra. A File explorer appears so to select the spectra files. The explorer will only show the formats accepted by each parser. For instance, if Single .csv is chosen as parser (step 2), then the file explorer will only show csv files. Ensure you chose the right parser in order to find your spectra files.
+4. Select a spectrum from the list.
+5. Visualize the selected spectrum: raw datapoints in grey, baseline in orange.
+6. Trim the spectrum to focus on a region of interest. Also change the baseline parameters to improve the baseline fit. Iterate between steps 5-6 to improve the fit.  
+7. Add peaks to model the baseline-substracted spectrum.
+8. Select the type of curve profile.
+9. Select a peak and modify its bound parameters. The peak fitting alogrithm will try fitting each peak within its bound region you choose, and with the maximum width you choose.
+10. Run the peak fit.
+11. Visualize the fitting results.  
+
+> Optional: You can download samples (*), i.e. the currently selected spectrum, its baseline and peak fits. This is useful when you wish to plot individual spectra.
+
+>Iterations: Repeat steps 4-11, updating the parameters, visualizing the results and improve the fit. Once your parameters seem to provide satisfactory results move to the next step.  
+
+12. Go to the Apply to all tab and revise your parameters.
+13. Run the batch processing step. The app process each spectrum with the parameters you provided. This step might take seconds to minutes, depending on the number of spectra being processed.
+14. Once the processing is completed, you can download the results as .csv files ready for plotting using your favourite software.
+
 
 # Use: as a package
-We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete documentation in the [docs](./docs) directory. If you wish to run the examples.ipynb make sure to have installed a prisma jupyter kernel as specified above.
+We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete documentation in the [docs](./docs). If you wish to run the examples.ipynb make sure to have installed a prisma jupyter kernel as specified above.
 
 
-# Cite
+
 
 # Contact
 Eibar Flores  
