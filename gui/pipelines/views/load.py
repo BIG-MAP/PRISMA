@@ -22,7 +22,7 @@ class ViewLoad:
         default_parser = list(self.parsers.keys())[0]        
         self.widget['Ddn_parser'] = wdg.Dropdown(options=self.parsers.keys(), value=default_parser, description='Parser')
 
-        self.widget['HTML_error'] = wdg.HTML(value='')
+        self.widget['HTML_status'] = wdg.HTML(value='')
 
         #keeping the default '--' option avoids changing the widgets value when updating the options, and so avoids triggering another callback
         self.widget['Sct_spectra'] = wdg.Select(options=['--'], value='--') 
@@ -38,7 +38,7 @@ class ViewLoad:
         
         self.widgetbox['load_spectra'] = wdg.VBox([self.widget['Ddn_parser'],
                                                     self.widget['Fld_spectra'],
-                                                    self.widget['HTML_error'] , 
+                                                    self.widget['HTML_status'] , 
                                                     self.widget['Sct_spectra']])
 
         self.widgetbox['load_spectra'].layout = {'display':'flex','flex_flow':'column','align_content': 'center'} 
@@ -87,10 +87,15 @@ class ViewLoad:
                                                 </a>""".format(filename=filename, payload=payload)
 
     def display_loading_error(self,error_msg):        
-        self.widget['HTML_error'].value = """<p style="color:Tomato;">Error: {}</p>""".format(error_msg)
+        self.widget['HTML_status'].value = """<p style="color:Tomato;">Error: {}</p>""".format(error_msg)
 
-    def clear_loading_error(self):
-        self.widget['HTML_error'].value = ''
+
+    def display_loading_status(self,status_msg):        
+        self.widget['HTML_status'].value = """<p style="color:DodgerBlue;">Status: {}</p>""".format(status_msg)
+
+
+    def clear_loading_status(self):
+        self.widget['HTML_status'].value = ''
 
 
     @property

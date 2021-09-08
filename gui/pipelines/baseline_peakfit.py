@@ -141,16 +141,16 @@ class BaselinePeakFitting:
 
     def callback_upload_spectra(self, button_upload):
 
+        self.subapps['Load'].display_loading_status(status_msg = 'Loading Files...')
+
         payload, parser_name = self.aux_get_payload_from_file_upload(button_upload['new'])   
 
         self.spectra, self.spectra_metadata = self.aux_run_available_parser(payload, parser_name)
 
         if not self.spectra:
-            self.subapps['Load'].display_loading_error(self.spectra_metadata['error'])
+            self.subapps['Load'].display_loading_error(error_msg = self.spectra_metadata['error'])
 
         else:
-            self.subapps['Load'].clear_loading_error()
-
             list_of_spectra = list(self.spectra.keys())
             list_of_spectra.sort()
 
@@ -161,6 +161,8 @@ class BaselinePeakFitting:
                                                     min_resolvable_width = self.spectra_metadata['min_resolvable_width'])
             self.subapps['FitPeaks'].set_width_limits(bound_limits = self.spectra_metadata['energy_limits'],
                                                     min_resolvable_width = self.spectra_metadata['min_resolvable_width'])
+
+            self.subapps['Load'].display_loading_status(status_msg = 'Uploaded {} spectra'.format(len(self.spectra)))
 
 
     

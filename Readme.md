@@ -8,26 +8,35 @@ PRISMA is a Jupyter-based app for high-throughput analysis of spectra. The app a
     * My dependencies: python, numpy, scipy, bqplot, jupyter lab, ipywidgets
 
 # Installation
-## Users unfamiliar with Python
+## Click-and-play installation
+For users unfamiliar with Python and code, we have prepared some scripts that install all necessary tools to run PRISMA's App. Here are detailed instructions: 
+
 * First download and install [Miniconda](https://docs.conda.io/en/latest/miniconda.html). Miniconda is a Python distribution (Python + other useful tools) that enables to run Python code, manage and install third-party packages. Miniconda is conveninent to quickly set up everything you need to run Python programs, including PRISMA.
 > **Note**: Make sure that Miniconda installs in the default folder `C:\Users\your_user_name\Miniconda3`. This will enable installing PRISMA smoothly.
 * In this github page click on the green button *Code* and Download ZIP
 * Unzip the file and open the folder. There you will find a bunch of files that contain code (prisma folder), documentation and examples (docs folder), scripts etc.
-* Navigate to the manual_installation folder and double click *install_environment.bat* file. A terminal (small black window with Matrix-style fonts) will appear and run the commands automatically. Just wait until it closes alone. This file will automatically run the necessary commmands to set up PRISMA.  
+* Navigate to the [autoinstall](./autoinstall) folder and double click *windows_install_script.bat* file. A terminal (small black window with Matrix-style fonts) will appear and run the commands automatically. Just wait until it closes alone. This file will automatically run the necessary commmands to set up PRISMA.  
 
 Thats it! You are ready to go. To launch the app, go back to the main folder and double-click on *launch_prisma.bat*. A browser tab will open and load the app. You can click the same *launch_prisma.bat* file every time you wish to use the app.
 
-**For Python-savvy users**   
+**Problems with the automated installation? Familiar with Python?**   
 
-While this is an operating version of PRISMA, we are still working in a stable version without package incompatibilities, that we can release to Pypi and/or Anaconda. In the meantime, you can install PRISMA by:
-* Cloning the repository (donwload it or `git clone`)
-* Creating a conda environment based on the *requirements.yml* file. 
-* Activating the created environment and installing prisma from the root directory (where the setup file is) using `pip install .`
-* If you wish to use PRISMA from Jupyter or use the GUI as well, make sure to install a PRISMA jupyter kernel. Run the following command after activating prisma's conda environment: `ipython kernel install --user --name=prisma`. After, open and run  the gui.ipynb notebook located in the ./gui directory. In the following links you can find more information about [jupyter kernels](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) and [how to manage them](https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove).
+If you encounter problems with the manual installation and/or are familiar with Python, you can install PRISMA 'manually'. 
+>**Note for Python savvy users**: While this is an operating version of PRISMA, we are still working in a stable version without package incompatibilities, that we can release to Pypi and/or Anaconda. In the meantime, you can try the 'manual' installation.
+
+**'Manual' installation**
+* Download/Clone the repository.
+* Create a conda environment based on the *requirements.yml* file. 
+* Activate the created environment and install prisma from the root directory (where the setup file is) using `pip install .`. If you have an installation error, try running the command prompt as administrator, or if you cannot, run `pip install . --user`. See [this post](https://www.dev2qa.com/how-to-fix-could-not-install-packages-due-to-an-environmenterror-winerror-5-access-is-denied-error-when-install-python-module-in-windows/) for more details.
+* If you wish to use PRISMA from Jupyter or use the GUI as well, make sure to install a PRISMA jupyter kernel as well. Run the following command after activating prisma's conda environment: `ipython kernel install --user --name=prisma`. Now you will be able to use prisma from Jupyter Lab, either to use it as a package or to run its GUI [GUI.ipynb](./gui).  
 
 >**Note:** These steps are automated in the scritps provided in the [autoinstall](./autoinstall) directory
 
->**Note:** Conda is used as environment manager and Python distribution because we found it to be the easiest way to install PRISMA in PCs with no admin rights, which is the case in many academic institutions. Some PCs do not even allow to install vanilla Python without admin rights. A compiled .exe is even more difficult to install. To our knowledge, there is no way easier than CONDA to go from developing Python source code to deploying in an user's PC; but we are always open to new ideas, developements and suggestions.
+In the following links you can find more information about [jupyter kernels](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) and [how to manage them](https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove).
+
+
+
+>**Note for Python savvy users** Conda is used as environment manager and Python distribution because we found it to be the easiest way to install PRISMA in PCs with no admin rights, which is the case in many academic institutions. Some PCs do not even allow to install vanilla Python without admin rights. A compiled .exe is even more difficult to install. To our knowledge, there is no way easier than CONDA to go from developing Python source code to deploying in an user's PC; but we are always open to new ideas, developements and suggestions.
 
 # Use: as an app
 The general workflow to use the app consist of:
