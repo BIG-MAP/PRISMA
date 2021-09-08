@@ -107,7 +107,7 @@ Generate a function of npeaks number of lorenztian profiles.  The lorentz profil
 
 ![Lorentzian](./figures/eqn_lor.png)   
 
-where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as  ![Lorentzian area](./figures/eqn_area_lor.png)  
+where *h, p, w* represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as  ![Lorentzian area](./figures/eqn_area_lor.png)  
 
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
@@ -118,7 +118,7 @@ where $h, p, w$ represent the height, position and half-width at half maximum of
 `prisma.lineshapes.lorentzians(npeaks)`  
 Generate a function of npeaks number of gaussian profiles.  The gaussian profile is described by the analytical expression:  
 ![Gaussian](./figures/eqn_gauss.png)  
-where $h, p, w$ represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as   
+where *h, p, w* represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as   
 ![Guassian area](./figures/eqn_area_gauss.png)
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
