@@ -85,10 +85,11 @@ def fit_peaks(spectrum, peak_bounds, guess_widths, lineshape = 'Lorentzian'):
     #formatting bounds and define fitting functions with helper functions
     init_guess, param_bounds = prisma_peak_defaults(peak_bounds, guess_widths, spectrum) 
     fitting_function, single_peak_function = get_fitting_functions(lineshape = lineshape, number_of_peaks = new_metadata['Number of peaks'])
+  
 
     #fitting 
     try:               
-        fitted_coeffs,_ = curve_fit(fitting_function, spectrum.indexes, spectrum.counts, p0=init_guess, bounds=param_bounds, ftol=1e-8) 
+        fitted_coeffs,_ = curve_fit(fitting_function, spectrum.indexes, spectrum.counts, p0=init_guess, bounds=param_bounds, ftol=1e-6, xtol=1e-6) 
 
         #store peaks and peak sum
         new_profiles = {peak_n : single_peak_function(spectrum.indexes, *(np.append(fitted_coeffs[0],fitted_coeffs[3*peak_n+1:3*peak_n+4]))) for peak_n in range(new_metadata['Number of peaks'])}

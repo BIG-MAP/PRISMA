@@ -1,0 +1,7 @@
+numpy>=1.20.0
+scipy>=1.6.0
+pandas>=1.2.1
+jupyterlab==3.0.6
+ipywidgets==7.6.3
+bqplot==0.12.21
+voila==0.2.8

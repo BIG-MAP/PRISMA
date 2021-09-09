@@ -29,7 +29,8 @@ def single_txt_bruker(bitstream: str):
                 spectra[label] = {'root': SpectrumRaw(indexes = indexes, 
                                                     counts = counts, 
                                                     name=label, 
-                                                    min_resolvable_width = np.abs(indexes[1]-indexes[0]))} 
+                                                    min_resolvable_width = np.abs(indexes[1]-indexes[0]),
+                                                    number_of_datapoints = len(counts))} 
 
         spectra_metadata['common_energy_axis'] = True
         spectra_metadata['energy_limits']=[np.amin(indexes),np.amax(indexes)]
@@ -79,7 +80,8 @@ def single_csv(bitstream: str):
             spectra[label] = {'root': SpectrumRaw(indexes = indexes, 
                                                 counts = column, 
                                                 name=label, 
-                                                min_resolvable_width = np.abs(indexes[1]-indexes[0]))} #instatiate spectrum
+                                                min_resolvable_width = np.abs(indexes[1]-indexes[0]), 
+                                                number_of_datapoints = len(column))} #instatiate spectrum
 
 
         spectra_metadata['common_energy_axis'] = True
@@ -140,7 +142,8 @@ def multiple_txt(upload: dict):
             spectra[label] = {'root': SpectrumRaw(indexes = indexes, 
                                                 counts = counts, 
                                                 name=label, 
-                                                min_resolvable_width = current_min_res_width)} #parent: None
+                                                min_resolvable_width = current_min_res_width, 
+                                                number_of_datapoints = len(counts))} #parent: None
 
 
         spectra_metadata['energy_limits']=[indexes_min,indexes_max]

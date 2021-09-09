@@ -220,7 +220,7 @@ with open(file_path, mode='rb') as file:`
 
 
 **Note:** All parsers output two dictionaries: the spectra and its metadata. Here is a schema of how to access the attributes:  
-![data hierarchyt](./figures/hierarchy.png)  
+![data hierarchy](./figures/hierarchy.png)  
 * The parser's output - spectra - is a dictionary whose keys correspond to individual spectrum names (the filenames of individual txt files, or headings of the single csv file)
 * Each name accesses itself a dictionary, storing three types of `Spectrum` objects:  
     * *root*: the original upload  

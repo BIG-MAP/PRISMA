@@ -131,7 +131,7 @@ class ViewFitPeaks:
             pass
         else:
             self.input_peaks.pop(self.widget['Select_peak'].value) #delete key with old name
-            new_label = 'Bounds: {:.0f} - {:.0f} | Witdh: {:.0f}'.format(self.widget['Range_bounds'].value[0],self.widget['Range_bounds'].value[1],self.widget['Slider_width'].value)
+            new_label = 'Bounds: {:.2f} - {:.2f} | Witdh: {:.2f}'.format(self.widget['Range_bounds'].value[0],self.widget['Range_bounds'].value[1],self.widget['Slider_width'].value)
             self.input_peaks.update({new_label:{'Bounds':self.widget['Range_bounds'].value,'Width':self.widget['Slider_width'].value}})
             new_options = list(self.input_peaks.keys())
             new_options.sort()
