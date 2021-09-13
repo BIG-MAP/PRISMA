@@ -1,6 +1,6 @@
 
 import numpy as np
-from prisma.spectrum import SpectrumProcessed
+from prisma.spectrum import Spectrum
 
 
 BATTINFO_ID = '0XH81'
@@ -28,7 +28,7 @@ def trimming(spectrum, within):
     
     new_metadata['Trim interval'] = [min(within[0],np.amin(spectrum.indexes)),max(within[1],np.amax(spectrum.indexes))]
 
-    return SpectrumProcessed(indexes = new_indexes, counts = new_counts, parent = spectrum, metadata = new_metadata)
+    return Spectrum(indexes = new_indexes, counts = new_counts, parent = spectrum, metadata = new_metadata)
 
 
 
