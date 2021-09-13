@@ -8,32 +8,30 @@ PRISMA supports three types of spectrum objects, all inheriting from a base `Spe
 
 
 ### Class Spectrum  
-`Spectrum(indexes, counts, parent=None, **kwargs)`  
+`Spectrum(indexes, counts, **kwargs)`  
 The base spectrum class. Constructs spectrum objects. 
 > **Arguments**
 >* `indexes`: numpy 1D array. The vector of indexes of the spectrum (e.g. wavenumbers, energies, wavelenghts, diffraction angles, etc.)   
->* `counts`: numpy 1D array. The vector of corresponding counts (e.g. counts, counts/s, absorbance, etc.). Must have the same shape as indexes.  
->* `parent`: spectrum object (default=None). The spectrum object that was used as input to generate the current spectrum object (i.e. an optional provenance keeper).  
+>* `counts`: numpy 1D array. The vector of corresponding counts (e.g. counts, counts/s, absorbance, etc.). Must have the same shape as indexes.    
 >* `kwargs`: key=value pairs. Anotate the spectrum object with metadata (e.g. name = 'my_spectrum', time = 23, temperature = 45). If the value is a dict, the key:value pairs are unpacked as metadata records as well.  
 
 >**Attributes**
 >* `indexes`: numpy 1D array.  
 >* `counts`: numpy 1D array.  
->* `parent`: spectrum object (default=None).
 >* `metadata`: dict. Metadata annotations as key:value pairs. If the spectrum object is output from a process, the metadata contains the type of process and the input parameters used.  
 >* `class_id`: dict. Name and identifiers of the class generating the object. The identifiers include support for Ontological URIs.
 
 
 
 ### Class SpectrumProcessed  
-`SpectrumProcessed(indexes, counts, parent=None, **kwargs)`  
+`SpectrumProcessed(indexes, counts, **kwargs)`  
 A processed spectrum. Inherits from class Spectrum with additional properties generated during processing. The medatada of SpectrumProcessed object stores the analysis type and parameters used.  
 >**Attributes inherited from Spectrum**
 
 
 
 ### Class SpectrumPeakfit  
-`SpectrumPeakfit(indexes, counts, parent, profiles, **kwargs)`  
+`SpectrumPeakfit(indexes, counts, profiles, **kwargs)`  
 A peak fitting of the spectrum. Inherits from class Spectrum with additional properties generated during processing. The medatada of the SpectrumPakfit object stores the both the fitting parameters and the resulting fitting coefficients.   
 > **Arguments**
 >* `profiles`: dict. Individual profile fitting a peak in the spectrum, as key:value pairs of {profile_number(int):numpy 1D array}.  
@@ -58,7 +56,7 @@ Trims the input spectrum within a range.
 >* `spectrum`: spectrum object used as input.
 >* `within`: [float,float]. The range defining where the spectrum is trimmed.  
 
->**Returns**: `SpectrumProcessed` object (trimmed)  
+>**Returns**: `Spectrum` object (trimmed)  
 
 
 

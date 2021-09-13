@@ -1,0 +1,10 @@
+# Folders #
+################
+#someOtherfoler/
+
+
+# Compiled source #
+###################
+*.pyc
+
+

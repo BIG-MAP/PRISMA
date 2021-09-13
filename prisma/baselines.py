@@ -40,4 +40,4 @@ def asymmetric_least_squares(spectrum, log_p=-1.5, log_lambda=7):
     new_counts = spectrum.counts - z
     new_indexes = spectrum.indexes
 
-    return SpectrumProcessed(indexes = new_indexes, counts = new_counts, parent = spectrum, metadata = new_metadata)
+    return SpectrumProcessed(indexes = new_indexes, counts = new_counts, baseline = z, metadata = new_metadata)

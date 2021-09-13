@@ -1,5 +1,5 @@
 import numpy as np
-from prisma.spectrum import SpectrumRaw
+from prisma.spectrum import Spectrum
 
 
 
@@ -26,7 +26,7 @@ def single_txt_bruker(bitstream: str):
                 temporary_array = np.array(line.split(b'\t')).astype('float64')
                 label, counts = temporary_array[0], temporary_array[1:]   
                 #for every line of counts, instatiate spectrum          
-                spectra[label] = {'root': SpectrumRaw(indexes = indexes, 
+                spectra[label] = {'root': Spectrum(indexes = indexes, 
                                                     counts = counts, 
                                                     name=label, 
                                                     min_resolvable_width = np.abs(indexes[1]-indexes[0]),
@@ -77,7 +77,7 @@ def single_csv(bitstream: str):
 
 
         for label, column in zip(spectra_names, spectra_data.T[1:]):
-            spectra[label] = {'root': SpectrumRaw(indexes = indexes, 
+            spectra[label] = {'root': Spectrum(indexes = indexes, 
                                                 counts = column, 
                                                 name=label, 
                                                 min_resolvable_width = np.abs(indexes[1]-indexes[0]), 
@@ -139,7 +139,7 @@ def multiple_txt(upload: dict):
             overall_min_res_width = current_min_res_width if current_min_res_width < overall_min_res_width else overall_min_res_width
 
             #add spectrum object to dictionary
-            spectra[label] = {'root': SpectrumRaw(indexes = indexes, 
+            spectra[label] = {'root': Spectrum(indexes = indexes, 
                                                 counts = counts, 
                                                 name=label, 
                                                 min_resolvable_width = current_min_res_width, 
