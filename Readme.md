@@ -45,25 +45,8 @@ The general workflow to use the app consist of i) choosing a pipeline (i.e. a se
 
 
 ![General Workflow](./docs/figures/app_use.png)  
-1. Select a pipeline
-2. Select a parser. Each parser reads spectra stored in a specific file format. [docs](./docs) to see the file formats accepted by each parser.
-3. Load spectra. A File explorer appears so to select the spectra files. The explorer will only show the formats accepted by each parser. For instance, if Single .csv is chosen as parser (step 2), then the file explorer will only show csv files. Ensure you chose the right parser in order to find your spectra files.
-4. Select a spectrum from the list.
-5. Visualize the selected spectrum: raw datapoints in grey, baseline in orange.
-6. Trim the spectrum to focus on a region of interest. Also change the baseline parameters to improve the baseline fit. Iterate between steps 5-6 to improve the fit.  
-7. Add peaks to model the baseline-substracted spectrum.
-8. Select the type of curve profile.
-9. Select a peak and modify its bound parameters. The peak fitting alogrithm will try fitting each peak within its bound region you choose, and with the maximum width you choose.
-10. Run the peak fit.
-11. Visualize the fitting results.  
 
-> Optional: You can download samples (*), i.e. the currently selected spectrum, its baseline and peak fits. This is useful when you wish to plot individual spectra.
-
->Iterations: Repeat steps 4-11, updating the parameters, visualizing the results and improve the fit. Once your parameters seem to provide satisfactory results move to the next step.  
-
-12. Go to the Apply to all tab and revise your parameters.
-13. Run the batch processing step. The app process each spectrum with the parameters you provided. This step might take seconds to minutes, depending on the number of spectra being processed.
-14. Once the processing is completed, you can download the results as .csv files ready for plotting using your favourite software.
+Consult the [App use](./docs) in the documentation for a complete description of these steps, potential issues and suggested workarounds.  
 
 
 # Use: as a package
