@@ -24,7 +24,6 @@ class BaselinePeakFitting:
 
     def __init__(self):
         self.interface = None
-        self.subapps = {}
         self.spectra = {}
         self.spectra_metadata = {}
 

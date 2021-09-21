@@ -121,7 +121,7 @@ class PeakFitting:
             self.subapps['Load'].display_loading_error(self.spectra_metadata['error'])
 
         else:
-            self.subapps['Load'].clear_loading_error()
+            self.subapps['Load'].display_loading_status(status_msg = 'Uploaded {} spectra'.format(len(self.spectra)))
             
             list_of_spectra = list(self.spectra.keys())
             list_of_spectra.sort()
