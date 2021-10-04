@@ -1,3 +1,5 @@
+# © Copyright 2021, PRISMA’s Authors
+
 import bqplot as plt
 import ipywidgets as wdg
 import numpy as np

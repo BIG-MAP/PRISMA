@@ -1,3 +1,5 @@
+# © Copyright 2021, PRISMA’s Authors
+
 import numpy as np
 from scipy.sparse.linalg import spsolve
 from scipy import sparse

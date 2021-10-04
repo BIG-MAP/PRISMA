@@ -1,3 +1,5 @@
+# © Copyright 2021, PRISMA’s Authors
+
 import ipywidgets as wdg
 import pandas as pd
 import functools 
@@ -11,6 +13,10 @@ import prisma.preprocessing
 import prisma.baselines
 import prisma.parsers
 
+
+# TKINTER OPTION IMPORTS
+# from tkinter.filedialog import askopenfilename #GUI box to open files
+# import tkinter
 
 
 AVAILABLE_PARSERS = {'Single .csv':          {'multiple files': False,'file format':'.csv'},
@@ -62,6 +68,11 @@ class BaselineCorrection:
 
 
     # ------------------- Auxiliary functions -------------
+
+    #TKINTER OPTION: ANONYMOUS ARGUMENT + FILENAME WINDOW + OPEN EVERY FILE IN FILENAME + PARSE INTO NAME:BINARY STRING DICTIONARY
+    # root = tkinter.Tk()
+    # files_full_paths = askopenfilename(title = "Select spectra", filetypes = (("text files","*.txt"),("all files","*.*")), multiple = True) #window to select files
+    # root.destroy()
 
     def aux_get_payload_from_file_upload(self, upload):
         parser_name = self.subapps['Load'].current_parser_name
@@ -118,6 +129,7 @@ class BaselineCorrection:
 
     # ------------------ CALLBACKS -------------------------
     def callback_upload_spectra(self, button_upload):
+        #TKINTER OPTION: NO ARGUMENT
         payload, parser_name = self.aux_get_payload_from_file_upload(button_upload['new'])   
 
         self.spectra, self.spectra_metadata = self.aux_run_available_parser(payload, parser_name)
@@ -151,7 +163,7 @@ class BaselineCorrection:
     # --------------------EVENTS-------------------
 
     def control_events(self):
-        self.subapps['Load'].widget['Fld_spectra'].observe(self.callback_upload_spectra, names='value')
+        self.subapps['Load'].widget['Fld_spectra'].observe(self.callback_upload_spectra, names='value') # TKINTER CHANGE: ONCLICK
         self.subapps['Load'].widget['Sct_spectra'].observe(self.callback_update_processing, names='value')
         self.subapps['Baseline'].widget['Range_trim'].observe(self.callback_update_processing, names='value')
         self.subapps['Baseline'].widget['Slider_baseline_p'].observe(self.callback_update_processing, names='value')

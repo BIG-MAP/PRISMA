@@ -1,4 +1,6 @@
 
+# © Copyright 2021, PRISMA’s Authors
+
 """Function generators according to a linehsape.
 Each function generator constructs lambda functions by evaluating strings. The generator 
 returns a function of npeaks number of profiles to be used for curve fitting

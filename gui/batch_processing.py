@@ -1,3 +1,5 @@
+# © Copyright 2021, PRISMA’s Authors
+
 import ipywidgets as wdg
 from zipfile import ZipFile
 import base64

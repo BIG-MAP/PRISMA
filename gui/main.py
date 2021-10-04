@@ -1,3 +1,5 @@
+# © Copyright 2021, PRISMA’s Authors
+
 import ipywidgets as wdg
 
 from pipeline_menu import PipelineMenu

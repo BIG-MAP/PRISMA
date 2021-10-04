@@ -1,4 +1,8 @@
 
+# © Copyright 2021, PRISMA’s Authors
+
+
+
 import numpy as np
 from prisma.spectrum import Spectrum
 

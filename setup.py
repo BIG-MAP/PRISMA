@@ -1,3 +1,5 @@
+# © Copyright 2021, PRISMA’s Authors
+
 from setuptools import setup
 
 
