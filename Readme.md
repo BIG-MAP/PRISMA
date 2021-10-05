@@ -8,7 +8,7 @@ Please cite this article if you use the app and/or the package:
 >Eibar Flores, Nataliia Mozhzhukhina, Xinyu Li, Poul Norby, Aleksandar Matic,Tejs Vegge.  PRISMA: A robust and intuitive tool for high-throughput processing of chemical spectra. ChemRxiv. [Preprint.] October, 2021. DOI: 10.33774/chemrxiv-2021-7qs3m
 
 # License
-PRISMA is distributed under an Open Source **BSD 3-Clause 'New' or 'Revised' License**. This License is similar to the BSD 2-Clause License, but with a 3rd clause that prohibits others from using the name of the project or its contributors to promote derived products without written consent. In short:  
+PRISMA is distributed under an **Open Source BSD 3-Clause 'New' or 'Revised' License**. This License is similar to the BSD 2-Clause License, but with a 3rd clause that prohibits others from using the name of the project or its contributors to promote derived products without written consent. In short:  
 ### Permissions 
 * Commercial use
 * Modification
