@@ -4,7 +4,8 @@
 PRISMA is a Jupyter-based app for high-throughput analysis of spectra. The app addresses the need of researchers working in spectroscopy to analyze large numbers of spectra quickly, simply and reproducibly - whether they are code-savvy or not. PRISMA consists of both Python-based code for analysis of spectra and a user-friendly Graphical User Interface (GUI) built with the ipywidgets module.   
 
 # Cite
-TBD
+Please cite this article if you use the app and/or the package:  
+>Eibar Flores, Nataliia Mozhzhukhina, Xinyu Li, Poul Norby, Aleksandar Matic,Tejs Vegge.  PRISMA: A robust and intuitive tool for high-throughput processing of chemical spectra. ChemRxiv. [Preprint.] October, 2021. https://doi.org/10.26434/chemrxiv.13193858.v2
 
 # License
 PRISMA is distributed under an Open Source **BSD 3-Clause 'New' or 'Revised' License**. This License is similar to the BSD 2-Clause License, but with a 3rd clause that prohibits others from using the name of the project or its contributors to promote derived products without written consent. In short:  
