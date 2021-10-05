@@ -25,8 +25,8 @@ See [here](https://choosealicense.com/licenses/bsd-3-clause/) for more informati
 
 
 # Installation
-## Click-and-play installation
-For users unfamiliar with Python and code, we have prepared some scripts that install all necessary tools to run PRISMA's App. Here are detailed instructions: 
+## Click-and-play installation for Windows PCs
+For users unfamiliar with Python and code, and you work on a Windows PC, we have prepared some scripts that install all necessary tools to run PRISMA's App. Here are detailed instructions: 
 
 * First download and install [Miniconda](https://docs.conda.io/en/latest/miniconda.html). Miniconda is a Python distribution (Python + other useful tools) that enables to run Python code, manage and install third-party packages. Miniconda is conveninent to quickly set up everything you need to run Python programs, including PRISMA.
 > **Note**: Make sure that Miniconda installs in the default folder `C:\Users\your_user_name\Miniconda3`. This will enable installing PRISMA smoothly.
@@ -45,7 +45,7 @@ If you encounter problems with the manual installation and/or are familiar with 
 * Download/Clone the repository.
 * Create a conda environment based on the *requirements.yml* file. 
 * Activate the created environment and install prisma from the root directory (where the setup file is) using `pip install .`. If you have an installation error, try running the command prompt as administrator, or if you cannot, run `pip install . --user`. See [this post](https://www.dev2qa.com/how-to-fix-could-not-install-packages-due-to-an-environmenterror-winerror-5-access-is-denied-error-when-install-python-module-in-windows/) for more details.
-* If you wish to use PRISMA from Jupyter or use the GUI as well, make sure to install a PRISMA jupyter kernel as well. Run the following command after activating prisma's conda environment: `ipython kernel install --user --name=prisma`. Now you will be able to use prisma from Jupyter Lab, either to use it as a package or to run its GUI [GUI.ipynb](./gui).  
+* If you wish to use PRISMA from Jupyter or use the GUI, make sure to install a PRISMA jupyter kernel as well. Run the following command after activating prisma's conda environment: `ipython kernel install --user --name=prisma`. Now you will be able to use prisma from Jupyter Lab, either to use it as a package or to run its GUI [GUI.ipynb](./gui).  
 
 >**Note:** These steps are automated in the scritps provided in the [autoinstall](./autoinstall) directory
 
@@ -61,11 +61,11 @@ The general workflow to use the app consist of i) choosing a pipeline (i.e. a se
 
 ![General Workflow](./docs/figures/app_use.png)  
 
-Consult the [App use](./docs) in the documentation for a complete description of these steps, potential issues and suggested workarounds.  
+Consult the [App use](./docs/AppUse.md) in the documentation for a complete description of these steps, potential issues and suggested workarounds.  
 
 
 # Use: as a package
-We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete documentation in the [docs](./docs). If you wish to run the [examples.ipynb](./docs/examples.ipynb) make sure to have installed a prisma jupyter kernel as specified above.
+We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete [Documentation](./docs/Documentation.md) . If you wish to run the [examples.ipynb](./docs/examples.ipynb) make sure to have installed a prisma jupyter kernel as specified above.
 
 
 
