@@ -15,18 +15,19 @@ The base spectrum class. Constructs spectrum objects.
 >* `counts`: numpy 1D array. The vector of corresponding counts (e.g. counts, counts/s, absorbance, etc.). Must have the same shape as indexes.    
 >* `kwargs`: key=value pairs. Anotate the spectrum object with metadata (e.g. name = 'my_spectrum', time = 23, temperature = 45). If the value is a dict, the key:value pairs are unpacked as metadata records as well.  
 
->**Attributes**
->* `indexes`: numpy 1D array.  
->* `counts`: numpy 1D array.  
->* `metadata`: dict. Metadata annotations as key:value pairs. If the spectrum object is output from a process, the metadata contains the type of process and the input parameters used.  
+>**Additional Attributes**  
 >* `class_id`: dict. Name and identifiers of the class generating the object. The identifiers include support for Ontological URIs.
 
 
 
 ### Class SpectrumProcessed  
-`SpectrumProcessed(indexes, counts, **kwargs)`  
-A processed spectrum. Inherits from class Spectrum with additional properties generated during processing. The medatada of SpectrumProcessed object stores the analysis type and parameters used.  
->**Attributes inherited from Spectrum**
+`SpectrumProcessed(indexes, counts, baseline, **kwargs)`  
+A processed spectrum. Inherits from class Spectrum with additional properties generated during processing.   
+> **Arguments**
+>* `indexes`: numpy 1D array. The vector of indexes of the spectrum (e.g. wavenumbers, energies, wavelenghts, diffraction angles, etc.).    
+>* `counts`: numpy 1D array. The vector of corresponding baseline-substracted counts. Must have the same shape as indexes.   
+>* `baseline`: numpy 1D array. The vector of corresponding to the baseline curve.  Must have the same shape as indexes. 
+>* `kwargs`: key=value pairs. Anotate the spectrum object with metadata regarding the baseline correction processes (e.g. algorithm = 'ALS', lambda = 0.002, p = 0.001). If the value is a dict, the key:value pairs are unpacked as metadata records as well.   
 
 
 
@@ -34,13 +35,11 @@ A processed spectrum. Inherits from class Spectrum with additional properties ge
 `SpectrumPeakfit(indexes, counts, profiles, **kwargs)`  
 A peak fitting of the spectrum. Inherits from class Spectrum with additional properties generated during processing. The medatada of the SpectrumPakfit object stores the both the fitting parameters and the resulting fitting coefficients.   
 > **Arguments**
->* `profiles`: dict. Individual profile fitting a peak in the spectrum, as key:value pairs of {profile_number(int):numpy 1D array}.  
-
->**Attributes**
->* `profiles`: dict. Individual profile fitting a peak in the spectrum, as key:value pairs of {profile_number(int):numpy 1D array}.
->* Attributes inherited from Spectrum  
-
-
+>* `indexes`: numpy 1D array. The vector of indexes of the spectrum (e.g. wavenumbers, energies, wavelenghts, diffraction angles, etc.).    
+>* `counts`: numpy 1D array. The vector corresponding to the sum of all fitting profiles. Must have the same shape as indexes.   
+>* `profiles`: dict. Individual profile fitting a peak in the spectrum, as key:value pairs of profile number : profile {int : numpy 1D array}. 
+>* `kwargs`: key=value pairs. Anotate the spectrum object with metadata regarding the fitting. If the value is a dict, the key:value pairs are unpacked as metadata records as well.  
+ 
 
 ## Processing Modules
 PRISMA functions are sorted into modules. Each module has a collection of functions that can be accessed with the dot notation. 
@@ -98,7 +97,7 @@ Fit a spectrum with a set of overlapping profiles.
 ### Module Lineshapes
 `import prisma.lineshapes`  
 Function generators according to a linehsape. Each function generator constructs lambda functions by evaluating strings. The generator 
-returns a function of a number of profiles. The returned function is: `returned_function(x, y0, h1, p1, w1, h2, p2, w2 ,h3 ,p3 ,w3...)`, where y0 is the intercept and hn, pn, wn correond to the height, position and width of the n-th peak.  These functions can be used to generate, e.g. synthetic spectra.
+returns a function of a number of profiles. The returned function is: `returned_function(x, y0, h1, p1, w1, h2, p2, w2 ,h3 ,p3 ,w3...)`, where y0 is the intercept and hn, pn, wn correspond to the height, position and width of the n-th peak.  These functions can be used to generate, e.g. synthetic spectra.
 #### Lorentzians
 `prisma.lineshapes.lorentzians(npeaks)`  
 Generate a function of npeaks number of lorenztian profiles.  The lorentz profile is described by the analytical expression  
@@ -110,7 +109,7 @@ where *h, p, w* represent the height, position and half-width at half maximum of
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
 
->**Returns**: `function` that takes as inputs an array of indexes (x: numpy array) and the parameters of the lorentzian curves (y0, h1, p1, w1).  
+>**Returns**: `function` that takes as inputs an array of indexes (x: 1D numpy array) and the parameters of the lorentzian curves (y0, h1, p1, w1, h2, p2, w2,...).  
 
 #### Gaussians
 `prisma.lineshapes.lorentzians(npeaks)`  
@@ -121,7 +120,7 @@ where *h, p, w* represent the height, position and half-width at half maximum of
 > **Arguments**
 >* `npeaks`: Number of lorentzian curves.  
 
->**Returns**: `function` that takes as inputs an array of indexes (x: numpy array) and the parameters of the gaussian curves (y0, h1, p1, w1). 
+>**Returns**: `function` that takes as inputs an array of indexes (x: 1D numpy array) and the parameters of the lorentzian curves (y0, h1, p1, w1, h2, p2, w2,...).
 
 #### Pseudo-Voight: 50% Lorentzian
 `prisma.lineshapes.pseudo_voight_50(npeaks)`  
@@ -130,20 +129,24 @@ Generate a function of npeaks number of pseudo-voight profiles (50% Lorentzian).
 > **Arguments**
 >* `npeaks`: Number of pseudo-voight curves.  
 
->**Returns**: `function` that takes as inputs an array of indexes (x: numpy array) and the parameters of the pseudo-voight curves (y0, h1, p1, w1). 
+>**Returns**: `function` that takes as inputs an array of indexes (x: 1D numpy array) and the parameters of the lorentzian curves (y0, h1, p1, w1, h2, p2, w2,...).
 
 Example of using the lineshapes to generate data:  
 ```
 import numpy as np
 
-x = np.arange(200,1500,2)
-n_profiles = 3
+#array of indexes
+x_array = np.arange(200,1500,2) 
+
+n_profiles = 3 
 intercept = 0
-params1 = [200,650,50] #Parameters of first curve 
-params2 = [500,730,10]
-params3 = [300,900,20]
+params1 = [200,650,50] #Parameters of first profile
+params2 = [500,730,10] #Parameters of second profile
+params3 = [300,900,20] #Parameters of third profile
 
 my_lorentzian_function = prisma.lineshapes.lorentzians(n_profiles)
+
+#array counts as sum of proifle1 + profile2 + profile3
 y_array = my_lorentzian_function(x, intercept, *params1, *params2, *params3)
 ```
 
@@ -153,10 +156,10 @@ y_array = my_lorentzian_function(x, intercept, *params1, *params2, *params3)
 
 ### Module Parsers
 `import prisma.parsers`
-Functions that load spectra data files (.txt, .csv) into spectrum objects. 
+Functions that load spectra data files (.txt, .csv) into spectrum objects. PRISMA currently supports 3 parsers. 
 
 
-#### Single .csv  
+#### 1. Single .csv  
 `prisma.parsers.single_csv(bitstream)`  
 Reads a bitstream from a single .csv file containing all spectra. The .csv file must follow a format where the first column contains the index, and the successive columns the count columns labelled with the spectra names or perturbation values (e.g. temperature, time, position, voltage). For instance:  
 ![csv file format](./figures/single_csv.png)
@@ -168,15 +171,17 @@ Reads a bitstream from a single .csv file containing all spectra. The .csv file 
 >* `metadata`: dict. Dictionary of parameter:value pairs. E.g. `{'Number of spectra':200, 'Highest wavenumber: 1000}`   
 Example snippet to load files:  
 ```
-file_path = r'./my_directory/my_dataset.csv' 
-with open(file_path, mode='rb') as file:`  
+file_path = r'./my_directory/my_dataset.csv'
+
+#open as binary file using 'rb' mode
+with open(file_path, mode='rb') as file:  
     spectra, spectra_metadata = prisma.parsers.single_csv(file.read())
 ```
 
 
-#### Multiple .txt
+#### 2. Multiple .txt
 `prisma.parsers.multiple_txt(bitstream)`  
-Reads the bitstream from multiple .txt files.  Each .txt file must follow a format where the indexes and counts are presented as a first and second column of numerical values. the columns must not be labelled. The filename is used as perturbation value (e.g. temperature, time, position, voltage). For instance:  
+Reads the bitstream from multiple .txt files.  Each .txt file must follow a format where the indexes and counts are presented as a first and second column of numerical values. The columns must not be labelled with any heading. The filename is used as perturbation value (e.g. temperature, time, position, voltage). For instance:  
 ![txt file format](./figures/multiple_txt.png)
 > **Arguments**
 >* `upload`: dictionary of label:bistream pairs representing the content of each .txt file.  
@@ -191,16 +196,17 @@ import os #Read filenames in a directory
 file_path = r'./my_directory/'
 binary_text_files = {}
 
-for filename in os.listdir(file_path): #Create dictionary of filename:bitstream pairs
+#Create dictionary of filename:bitstream pairs
+for filename in os.listdir(file_path): 
     with open(file_path+filename, mode='rb') as file:
         binary_text_files[filename] = file.read() 
 
 spectra, spectra_metadata = prisma.parsers.multiple_txt(binary_text_files)
 ```
 
-#### Single .txt (from Bruker instruments)
+#### 3. Single .txt (from Bruker instruments)
 `prisma.parsers.single_txt_bruker(bitstream)`  
-Reads the bitstream from a .txt file and generates spectrum objects. This parser is tailored to files exported from Bruker spectrometers, but any single txt file complying with the format can be read. The file starting from instrument parameters labelled with hashtags, followed by a row of wavenumbers, and successive rows of counts whose first value is the perturbation value (e.g. time, temperature, voltage, etc.):  
+Reads the bitstream from a .txt file and generates spectrum objects. This parser is tailored to files exported from Bruker spectrometers, but any single txt file complying with the format can be read. The file starts with instrument parameters labelled with hashtags, followed by a row of wavenumbers, and successive rows of counts whose first value is the perturbation value (e.g. time, temperature, voltage, etc.):  
 ![txt file format](./figures/single_txt.png)
 > **Arguments**
 >* `bitstream`: string. Bitstream representing the content of the .txt file. The .txt file follows previously illustrated format format, 
@@ -211,22 +217,34 @@ Reads the bitstream from a .txt file and generates spectrum objects. This parser
 
 Example snippet to load files:  
 ```
-file_path = r'./my_directory/my_dataset.txt' 
+file_path = r'./my_directory/my_special_dataset.txt' 
 with open(file_path, mode='rb') as file:`  
     spectra, spectra_metadata = prisma.parsers.single_txt(file.read())
 ```
 
-
-**Note:** All parsers output two dictionaries: the spectra and its metadata. Here is a schema of how to access the attributes:  
+#### Using the spectra  
+All parsers output two dictionaries: the spectra and its metadata. Here is a schema of how to access the attributes:  
 ![data hierarchy](./figures/hierarchy.png)  
 * The parser's output - spectra - is a dictionary whose keys correspond to individual spectrum names (the filenames of individual txt files, or headings of the single csv file)
 * Each name accesses itself a dictionary, storing three types of `Spectrum` objects:  
     * *root*: the original upload  
     * *processed*: after baseline correction
-    * *fit*: after peak fitting.  
+    * *fit*: after peak fitting.    
 
-In addition of the three main objects, you can of course add more keys to specify different operations.  
-
-```python
-
+Here is a snipped illustrating how to access the data from the Parsers output:  
 ```
+import matplotlib.pyplot as plt
+
+fig1 = plt.figure()
+
+#Plot two raw spectra
+plt.scatter(x=spectra['spectrum_0']['root'].indexes, 
+            y=spectra['spectrum_0']['root'].counts)
+
+plt.scatter(x=spectra['spectrum_18']['root'].indexes, 
+            y=spectra['spectrum_18']['root'].counts)
+
+plt.show()
+```
+
+In addition of the three main objects *root, processed, fit*, you can of course add more keys to specify different operations.  For more detailed examples consult the [Examples Notebook](./examples.ipynb).
