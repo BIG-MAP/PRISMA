@@ -1,13 +1,27 @@
 ![Logo](./docs/figures/logo.png) 
 # PRISMA App
 
-PRISMA is a Jupyter-based app for high-throughput analysis of spectra. The app addresses the need of researchers working in spectroscopy to analyze large numbers of spectra quickly, simply and reproducibly - whether they are code-savvy or not. PRISMA consists of both Python-based code for analysis of spectra and a user-friendly Graphical User Interface (GUI) built with the ipywidgets module. 
-
-# License
-* Which License to use?
-    * My dependencies: python, numpy, scipy, bqplot, jupyter lab, ipywidgets, voila  
+PRISMA is a Jupyter-based app for high-throughput analysis of spectra. The app addresses the need of researchers working in spectroscopy to analyze large numbers of spectra quickly, simply and reproducibly - whether they are code-savvy or not. PRISMA consists of both Python-based code for analysis of spectra and a user-friendly Graphical User Interface (GUI) built with the ipywidgets module.   
 
 # Cite
+TBD
+
+# License
+PRISMA is distributed under an Open Source **BSD 3-Clause 'New' or 'Revised' License**. This License is similar to the BSD 2-Clause License, but with a 3rd clause that prohibits others from using the name of the project or its contributors to promote derived products without written consent. In short:  
+### Permissions 
+* Commercial use
+* Modification
+* Distribution
+* Private use
+ ### Limitations 
+* Liability
+* Warranty
+ ### Conditions 
+* License and copyright notice  
+
+See [here](https://choosealicense.com/licenses/bsd-3-clause/) for more information about this license.
+
+
 
 # Installation
 ## Click-and-play installation
@@ -50,7 +64,7 @@ Consult the [App use](./docs) in the documentation for a complete description of
 
 
 # Use: as a package
-We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete documentation in the [docs](./docs). If you wish to run the examples.ipynb make sure to have installed a prisma jupyter kernel as specified above.
+We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete documentation in the [docs](./docs). If you wish to run the [examples.ipynb](./docs/examples.ipynb) make sure to have installed a prisma jupyter kernel as specified above.
 
 
 
