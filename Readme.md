@@ -56,10 +56,10 @@ In the following links you can find more information about [jupyter kernels](htt
 >**Note for Python savvy users** Conda is used as environment manager and Python distribution because we found it to be the easiest way to install PRISMA in PCs with no admin rights, which is the case in many academic institutions. Some PCs do not even allow to install vanilla Python without admin rights. A compiled .exe is even more difficult to install. To our knowledge, there is no way easier than CONDA to go from developing Python source code to deploying in an user's PC; but we are always open to new ideas, developements and suggestions.
 
 # Use: as an app
-The general workflow to use the app consist of i) choosing a pipeline (i.e. a series of processing steps), ii) exploring processing parameters and iii) running a high-throughput analysis applying the same parameters to all spectra. These three steps are divided as tabs in the GUI. The illustration below shows an example of typical steps when performing baseline substraction followed by peak fitting:
+The general workflow to use the app consist of i) choosing a pipeline (i.e. a series of processing steps), ii) exploring processing parameters and iii) running a high-throughput analysis applying the same parameters to all spectra. These three steps are divided as tabs in the GUI. The animation below shows an example of typical steps when performing baseline substraction followed by peak fitting:
 
+![app-use](./PRISMA_app_use.gif)
 
-![General Workflow](./docs/figures/app_use.png)  
 
 Consult the [App use](./docs/AppUse.md) in the documentation for a complete description of these steps, potential issues and suggested workarounds.  
 
