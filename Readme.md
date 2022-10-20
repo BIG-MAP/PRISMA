@@ -68,11 +68,14 @@ Consult the [App use](./docs/AppUse.md) in the documentation for a complete desc
 We have created a jupyter notebook with examples of how to use all prisma functionalities as a package. You can find the examples and complete [Documentation](./docs/Documentation.md) . If you wish to run the [examples.ipynb](./docs/examples.ipynb) make sure to have installed a prisma jupyter kernel as specified above.
 
 
-
-
 # Contact
 Eibar Flores  
 Technical University Denmark  
 eibfl@dtu.dk
+
+# Aknowledgements
+<img src="./docs/figures/BIG_MAP_logo.jpg" alt="drawing" width="80"/>  
+
+This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 957189 ([BIG-MAP](https://www.big-map.eu/)).
 
 
