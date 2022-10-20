@@ -112,7 +112,7 @@ where *h, p, w* represent the height, position and half-width at half maximum of
 >**Returns**: `function` that takes as inputs an array of indexes (x: 1D numpy array) and the parameters of the lorentzian curves (y0, h1, p1, w1, h2, p2, w2,...).  
 
 #### Gaussians
-`prisma.lineshapes.lorentzians(npeaks)`  
+`prisma.lineshapes.gaussians(npeaks)`  
 Generate a function of npeaks number of gaussian profiles.  The gaussian profile is described by the analytical expression:  
 ![Gaussian](./figures/eqn_gauss.png)  
 where *h, p, w* represent the height, position and half-width at half maximum of the profile, respectively. The area can be calculated as   
