@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="56mm"
+   height="35mm"
+   viewBox="0 0 56 35"
+   version="1.1"
+   id="svg5"
+   xml:space="preserve"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs2"><linearGradient
+       id="linearGradient2732"><stop
+         style="stop-color:#333333;stop-opacity:0.84758359;"
+         offset="0"
+         id="stop2728" /><stop
+         style="stop-color:#333333;stop-opacity:0.5;"
+         offset="1"
+         id="stop2730" /></linearGradient><linearGradient
+       xlink:href="#linearGradient2732"
+       id="linearGradient317"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.83828184,0,0,0.90997716,-25.905336,-105.84456)"
+       x1="106.80723"
+       y1="169.90019"
+       x2="42.415752"
+       y2="135.19717" /></defs><g
+     id="layer1"
+     transform="translate(-8.7613461,-15.73438)"><rect
+       style="mix-blend-mode:normal;fill:url(#linearGradient317);fill-opacity:1;stroke:none;stroke-width:0.672514;stroke-dasharray:none;stroke-opacity:1"
+       id="rect378-69"
+       width="56"
+       height="35"
+       x="8.7613468"
+       y="15.734381"
+       rx="4.1914096" /><path
+       style="fill:none;fill-opacity:1;stroke:#f44336;stroke-width:1.15308;stroke-dasharray:none;stroke-opacity:1"
+       d="M 13.713286,47.977622 C 36.840321,42.268053 61.239462,23.669128 61.239462,23.669128"
+       id="path3014-3" /><path
+       style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:1.37929;stroke-dasharray:none;stroke-opacity:1"
+       d="m 13.46895,47.224146 c 6.249091,-2.69242 8.99465,-9.707694 8.90827,-15.722435 -0.09457,-6.585939 -1.308896,-9.721054 -0.332389,-10.055053 0.764427,-0.261466 2.680567,6.283573 6.514998,9.755896 3.83444,3.472313 8.743822,4.614692 15.525491,0.550895 6.781669,-4.063788 4.384168,-11.893999 5.346762,-12.249302 0.962594,-0.355313 2.51955,4.136834 5.387221,4.851001 2.867672,0.714166 6.448526,-1.279738 6.448526,-1.279738"
+       id="path3946-7" /></g></svg>
