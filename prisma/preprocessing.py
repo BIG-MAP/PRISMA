@@ -4,6 +4,9 @@
 
 
 import numpy as np
+import scipy as sp
+
+
 from prisma.spectrum import Spectrum
 
 
@@ -36,12 +39,37 @@ def trimming(spectrum, within):
 
 
 
+def downsample(spectrum, downsampling_factor:int):
 
-def smooth_assymlsq(spectrum, parameters):
-    #To be implemented
-    pass
+    if downsampling_factor>1:    
+
+        samples_decimated = int(len(spectrum.counts)/downsampling_factor)
+        min_index, max_index = min(spectrum.indexes), max(spectrum.indexes)
+
+        new_counts = sp.signal.decimate(spectrum.counts, downsampling_factor)
+        new_indexes = np.linspace(min_index, max_index, samples_decimated, endpoint=False)
+
+        return Spectrum(indexes = new_indexes, counts = new_counts)
+
+    else:
+        return spectrum
 
 
-def reject_outliers_std_method(spectrum, parameters):
-    #To be implemented
-    pass
+
+
+
+def reject_outliers(spectrum, remove_outliers:bool):
+    
+    ## TO DO: CHANGE TO DETECT OUTLIERS USING DIFFS not the main vaules.
+    if remove_outliers:
+        q1, q3 = np.percentile(spectrum.counts, [25, 75])
+        mask = (spectrum.counts >= q1 - 1.5 * (q3 - q1)) & (spectrum.counts <= q3 + 1.5 * (q3 - q1))
+
+        new_indexes = spectrum.indexes[mask]
+        new_counts = spectrum.counts[mask]
+
+        return Spectrum(indexes = new_indexes, counts = new_counts)
+    
+    else:
+        return spectrum
+

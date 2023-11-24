@@ -1,5 +1,4 @@
 import streamlit as st
-from io import BytesIO
 from PIL import Image
 import subprocess
 
@@ -16,12 +15,12 @@ col2.markdown("Eibar Flores | [The BIG-MAP Project](https://www.big-map.eu/) | [
  
 st.markdown("## Select a procesing pipeline")
 
-pipeline_col1, pipeline_col2= st.columns(2)
+pipeline_col1, pipeline_col2, _, _= st.columns([1,1,1,1])
 
 with pipeline_col1:
         st.image(Image.open("./gui2/assets/icon_preprocessing.png"), use_column_width=True)
         pipeline_preprocessing_selected = st.button("Pre-processing", use_container_width=True)
-        st.markdown("Smoothing, outlier rejection, trimming, downsampling, baseline correction.")
+        st.markdown("Trimming, outlier rejection, downsampling, baseline correction.")
 
  
 with pipeline_col2:
