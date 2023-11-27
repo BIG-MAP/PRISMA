@@ -11,12 +11,28 @@ st.header("Peak fitting")
 
 
 ################### FILE UPLOAD #####################
-with st.expander("Upload files"):
 
-        chosen_format = st.radio("File format", 
-                                options=["Single CSV file", "Multiple CSV files"], 
+
+with st.sidebar.expander("Upload files"):
+
+        parser = st.radio("Format of spectra", 
+                                options=["Single .csv", "Single .txt (Bruker)", "Multiple .txt"], 
                                 help="See documentation: what formats are accepted")
+        
+        multiple_files = True if parser == "Multiple .txt" else False
 
-        uploaded_files = st.file_uploader("Choose CSV files", accept_multiple_files=True)
+        uploaded_files = st.file_uploader("Choose CSV files", accept_multiple_files=multiple_files)
 
-file_namnes = [uploaded_file.name for uploaded_file in uploaded_files]
+
+################### PEAK FITTING SPECS #####################
+
+st.selectbox(label="Peak lineshape", options=["Lorentizan", "Gaussian", "Pseudo-Voight"])
+
+data_df = pd.DataFrame(
+    {"Minimum":[],
+    "Maximum":[],
+     "Width":[],
+    }
+)
+
+st.data_editor(data_df, hide_index=True, num_rows="dynamic")
