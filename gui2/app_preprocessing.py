@@ -72,18 +72,23 @@ def update_preprocessing_parameters(spectra_metadata:dict = None):
 def process_spectrum(spectrum:Spectrum,
                     trim_range:tuple[int],
                     donwsampling_factor:int,
-                    remove_outliers:bool,
+                    outliers_threshold:float,
                     baseline_p:tuple[int],
                     baseline_lambda:tuple[int]):
     """Takes preprocessing parameters from the widgets to apply all pre-processing functions"""
     
     processed_spectrum = preprocessing.trimming(spectrum, trim_range)
     processed_spectrum = preprocessing.downsample(processed_spectrum, donwsampling_factor)
-    processed_spectrum = preprocessing.reject_outliers(processed_spectrum, remove_outliers)
+    processed_spectrum = preprocessing.reject_outliers(processed_spectrum, outliers_threshold)
     processed_spectrum = baselines.asymmetric_least_squares(processed_spectrum, log_p=baseline_p, log_lambda=baseline_lambda)
 
     return processed_spectrum
 
+
+@st.cache_data
+def convert_df(df):
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_csv().encode('utf-8')
 
 
 
@@ -151,39 +156,32 @@ with tab_trim:
                                        value = preprocs_params["trimming"]["value"])
 
 with tab_downsample:
-    st.markdown("How many points are kept from original signal. Ex. 2: singal reduced by half.")
+    st.markdown("Reduce datapoints from the original signal. Ex. 2: singal reduced by half.")
     donwsampling_factor:int = st.slider('Downsampling factor', 1, 10, 1)
 
 with tab_outliers:
-    st.markdown("Removes points outside 1.5 IQR from the median difference value.")
-    remove_outliers:bool = st.toggle('Remove outliers')
+    st.markdown("Removes points outside X * IQR of the spectral noise. X is the outlier removal threshold.")
+    outliers_threshold:float = st.slider("Outlier removal threshold", min_value = 0.0, max_value = 9.0, value = 0.0, step = 0.5)
 
 
 with tab_baseline:
     st.markdown("Applies Eiler's ALS algorithm to fit a baseline to spectra")
     baseline_p:float = st.slider("log10 (P-parameter)", min_value = -4.5, max_value = -0.5, value = -1.5, step = 0.25)
-    baseline_lambda:float = st.slider("log10 (Lambda-parameter)", min_value = 2.0, max_value = 14.0, value = 7.0, step = 0.5)
-
-
-
-
-############## PROCESSED SPECTRUM
-processed_spectrum_container = st.container()
-
-
+    baseline_lambda:float = st.slider("log10 (Lambda-parameter)", min_value = 0.0, max_value = 14.0, value = 7.0, step = 0.5)
 
 
 ########## PROCESS SPECTRA AND PLOT
+processed_spectrum_container = st.container()
 fig_raw = go.Figure()
 fig_processed = go.Figure()
 
 
-if current_spectrum:
+if current_spectrum: 
 
     processed_spectrum = process_spectrum(spectrum=current_spectrum["root"],
                             trim_range= trimm_range,
                             donwsampling_factor=donwsampling_factor,
-                            remove_outliers=remove_outliers,
+                            outliers_threshold=outliers_threshold,
                             baseline_p=baseline_p,
                             baseline_lambda=baseline_lambda)
 
@@ -236,6 +234,7 @@ if current_spectrum:
     
     fig_processed.update_xaxes(title_text="Index")
     fig_processed.update_yaxes(title_text="Counts")
+    fig_processed.update_layout(title='Processed spectrum',title_x=0.05, title_y=0.82)
 
 
 
@@ -255,3 +254,28 @@ raw_spectrum_container.plotly_chart(fig_raw, use_container_width=True)
 processed_spectrum_container.plotly_chart(fig_processed, use_container_width=True)
 
 
+####################### BATCH PROCESSING AND DOWNLOAD ######################
+
+st.markdown("### Batch processing")
+
+run_batch_processing = st.button("Run batch processing")
+batch_log_container = st.container()
+
+if run_batch_processing:
+    # batch processing loop
+    processing_df = pd.DataFrame() #replace by processed dataframe    
+    disable_donwload = False
+    
+else:
+    processing_df = pd.DataFrame()
+    disable_donwload = True
+    
+
+csv = convert_df(processing_df)
+
+donwload_processed_data = st.download_button(
+                        label="Download processed spectra",
+                        data=csv,
+                        file_name='Processed_spectra.csv',
+                        mime='text/csv', 
+                        disabled=disable_donwload)
