@@ -58,18 +58,29 @@ def downsample(spectrum, downsampling_factor:int):
 
 
 
-def reject_outliers(spectrum, remove_outliers:bool):
+def reject_outliers(spectrum, outliers_threshold=0.0):
     
-    ## TO DO: CHANGE TO DETECT OUTLIERS USING DIFFS not the main vaules.
-    if remove_outliers:
-        q1, q3 = np.percentile(spectrum.counts, [25, 75])
-        mask = (spectrum.counts >= q1 - 1.5 * (q3 - q1)) & (spectrum.counts <= q3 + 1.5 * (q3 - q1))
+    if outliers_threshold > 0.0:
 
-        new_indexes = spectrum.indexes[mask]
-        new_counts = spectrum.counts[mask]
+        differential_counts = np.abs(np.diff(spectrum.counts, n=2, prepend=spectrum.counts[0], append=spectrum.counts[-1]))
+        q1, q3 = np.percentile(differential_counts, [25, 75])
+        iqr = q3 - q1
+
+        outliers_idxs = np.where((differential_counts < q1 - outliers_threshold * iqr) | (differential_counts > q3 + outliers_threshold *  iqr))[0]
+
+        if outliers_idxs.size == 0: #if there are no outliers
+            return spectrum
+        else:
+            outlier_groups =  np.split(outliers_idxs, np.where(np.diff(outliers_idxs)>1)[0]+1) #neighboring points are also classified as outliers. This groups an outlier and its neighbors
+            outliers_idxs_no_neighbors = [group[np.argmax(differential_counts[group])] for group in outlier_groups] #This select the outlier as the maximum value among its neigbors
+
+            new_counts = spectrum.counts.copy()
+            new_counts[outliers_idxs_no_neighbors] = np.nan
+            new_indexes = spectrum.indexes
 
         return Spectrum(indexes = new_indexes, counts = new_counts)
     
     else:
         return spectrum
+
 
