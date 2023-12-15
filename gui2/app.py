@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import subprocess
+import time
 
 
 
@@ -29,12 +30,20 @@ with pipeline_col2:
         st.markdown("Fitting with Lorentz, Gaussian and pseud-Voight peaks.")
 
 
+
+
 if pipeline_preprocessing_selected:
-        subprocess.Popen(["streamlit", "run", "./gui2/app_preprocessing.py"])
+        with st.spinner("The preprocessing app will open in a new tab."):
+                time.sleep(3)
+                subprocess.Popen(["streamlit", "run", "./gui2/app_preprocessing.py"])
+        st.success("App opened")
 
 
 if pipeline_fit_selected:
-        subprocess.Popen(["streamlit", "run", "./gui2/app_peak_fitting.py"])
+        with st.spinner("The peak fitting app will open in a new tab."):
+                time.sleep(3)
+                subprocess.Popen(["streamlit", "run", "./gui2/app_peak_fitting.py"])                
+        st.success("App opened")
 
 
 
