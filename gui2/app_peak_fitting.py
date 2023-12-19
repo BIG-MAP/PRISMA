@@ -140,10 +140,22 @@ peak_data = st.data_editor(data = pd.DataFrame({"Peak lower bound location":[], 
 
 
 
+
 ############# PLOTS ###################
 
 spectrum_container = st.container()
 fig = go.Figure()
+fig.update_xaxes(title_text="Index")
+fig.update_yaxes(title_text="Counts")
+fig.update_layout(template="simple_white",
+                      legend=dict(
+                        orientation="h",
+                        entrywidth=70,
+                        yanchor="bottom",
+                        y=1.02,
+                        xanchor="right",
+                        x=1),
+                    modebar_remove=["lasso2d", "displaylogo"])
 
 if current_spectrum: 
 
@@ -153,6 +165,8 @@ if current_spectrum:
                                  name="Spectrum",
                                  mode="markers",
                                  marker={"color":"#455A64"}))
+    
+    raw_spectrum_trace = fig.data[0]
     
     if peak_data.empty or (peak_data.isnull().all(axis=1)).all():
         pass
@@ -180,14 +194,6 @@ if current_spectrum:
 
 
     
-    fig.update_xaxes(title_text="Index")
-    fig.update_yaxes(title_text="Counts")
-    fig.update_layout(legend=dict(
-                        orientation="h",
-                        entrywidth=70,
-                        yanchor="bottom",
-                        y=1.02,
-                        xanchor="right",
-                        x=1))
-
-spectrum_container.plotly_chart(fig, use_container_width=True)
+    
+ 
+spectrum_container.plotly_chart(fig, use_container_width=True, config={'displaylogo': False})

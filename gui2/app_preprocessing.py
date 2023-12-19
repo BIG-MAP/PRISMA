@@ -257,8 +257,8 @@ else:
     fig_processed.update_layout(title='Processed spectrum',title_x=0.05, title_y=0.82, template="simple_white")
 
 
-raw_spectrum_container.plotly_chart(fig_raw, use_container_width=True)
-processed_spectrum_container.plotly_chart(fig_processed, use_container_width=True)
+raw_spectrum_container.plotly_chart(fig_raw, use_container_width=True, config={'displaylogo': False})
+processed_spectrum_container.plotly_chart(fig_processed, use_container_width=True, config={'displaylogo': False})
 
 
 ####################### BATCH PROCESSING AND DOWNLOAD ######################
