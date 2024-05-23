@@ -51,6 +51,8 @@ If you encounter problems with the manual installation and/or are familiar with 
 
 In the following links you can find more information about [jupyter kernels](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) and [how to manage them](https://queirozf.com/entries/jupyter-kernels-how-to-add-change-remove).
 
+We have updated installation instructions using Anaconda in the [Documentation](./docs/Anaconda_install.md)
+
 
 
 >**Note for Python savvy users** Conda is used as environment manager and Python distribution because we found it to be the easiest way to install PRISMA in PCs with no admin rights, which is the case in many academic institutions. Some PCs do not even allow to install vanilla Python without admin rights. A compiled .exe is even more difficult to install. To our knowledge, there is no way easier than CONDA to go from developing Python source code to deploying in an user's PC; but we are always open to new ideas, developements and suggestions.
@@ -70,8 +72,8 @@ We have created a jupyter notebook with examples of how to use all prisma functi
 
 # Contact
 Eibar Flores  
-Technical University Denmark  
-eibfl@dtu.dk
+SINTEF (NOR)  
+eibar.flores.cedeno@sintef.no
 
 # Aknowledgements
 <img src="./docs/figures/BIG_MAP_logo.jpg" alt="drawing" width="80"/>  
