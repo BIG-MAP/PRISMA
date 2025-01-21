@@ -87,7 +87,7 @@ def process_spectrum(
     processed_spectrum = spectrum.trimming(trim_range)
     processed_spectrum = processed_spectrum.downsample(donwsampling_factor)
     processed_spectrum = processed_spectrum.reject_outliers(outliers_threshold)
-    processed_spectrum = processed_spectrum.asymmetric_least_squares(
+    processed_spectrum = processed_spectrum.baseline_correction(
         log_p=baseline_p, log_lambda=baseline_lambda
     )
 
